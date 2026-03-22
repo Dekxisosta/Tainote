@@ -2,7 +2,7 @@
 
 A lightweight, distraction-free note-taking desktop app for writers.
 
-![Tainote Screenshot](./assets/images/screenshot.png)
+![Tainote Screenshot](./assets/images/Screenshot.png)
 
 ---
 
