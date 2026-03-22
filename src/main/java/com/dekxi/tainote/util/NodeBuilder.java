@@ -1,39 +1,157 @@
 package com.dekxi.tainote.util;
 
+import javafx.animation.*;
+import javafx.geometry.*;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
+import javafx.scene.layout.*;
+import javafx.scene.paint.*;
+import javafx.scene.shape.*;
+import javafx.stage.*;
+import javafx.util.*;
+
 import java.util.*;
 
-public class DialogBuilder {
-    private DialogBuilder(){}
+public class NodeBuilder {
+    private NodeBuilder(){}
+    public static Stage buildLoadingStage(Stage owner, String message) {
+        Stage stage = new Stage();
+        stage.initOwner(owner);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
 
-    public static void showInfo(String header, String content) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(DialogConfig.APP_TITLE);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.setGraphic(buildIcon(DialogConfig.ICON_SIZE_LARGE));
-        alert.showAndWait();
+        ImageView icon = new ImageView(new Image("/assets/tairitsu_icon.png"));
+        icon.setFitWidth(48);
+        icon.setFitHeight(48);
+        icon.setPreserveRatio(true);
+
+        Label label = new Label(message);
+        label.setStyle("-fx-font-size: 13px;");
+
+        Circle c1 = createDot();
+        Circle c2 = createDot();
+        Circle c3 = createDot();
+        HBox dots = new HBox(6, c1, c2, c3);
+        dots.setAlignment(Pos.CENTER);
+
+        animateDot(c1, 0);
+        animateDot(c2, 150);
+        animateDot(c3, 300);
+
+        VBox content = new VBox(10, icon, label, dots);
+        content.setAlignment(Pos.CENTER);
+        content.setStyle("-fx-padding: 24; -fx-background-color: white;");
+
+        stage.setScene(new Scene(content));
+        return stage;
     }
 
-    public static void showWarning(String header, String content) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(DialogConfig.WARNING_TITLE);
+    private static Circle createDot() {
+        Circle dot = new Circle(6);
+        dot.setFill(Color.web("#7B00FF"));
+        return dot;
+    }
+
+    private static void animateDot(Circle dot, int delayMs) {
+        TranslateTransition bounce = new TranslateTransition(Duration.millis(400), dot);
+        bounce.setByY(-10);
+        bounce.setAutoReverse(true);
+        bounce.setCycleCount(Timeline.INDEFINITE);
+        bounce.setDelay(Duration.millis(delayMs));
+        bounce.play();
+    }
+    public static void showInfo(String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(NodeConfig.APP_TITLE);
         alert.setHeaderText(header);
         alert.setContentText(content);
-        alert.setGraphic(buildIcon(DialogConfig.ICON_SIZE_LARGE));
+        alert.setGraphic(buildIcon(NodeConfig.ICON_SIZE_LARGE));
+        alert.showAndWait();
+    }
+    public static Stage buildAboutStage(Stage owner) {
+        String[] features = {
+                "WPM tracking",
+                "Note syncing",
+                "Clean distraction-free writing",
+                "Author and status tagging",
+                "Persistent local database"
+        };
+
+        VBox featureList = new VBox(4);
+        featureList.setAlignment(Pos.CENTER_LEFT);
+        for (String feature : features) {
+            Label item = new Label("• " + feature);
+            item.setStyle("-fx-font-size: 12px;");
+            featureList.getChildren().add(item);
+        }
+
+
+        Stage aboutStage = new Stage();
+        aboutStage.initOwner(owner);
+        aboutStage.initModality(Modality.APPLICATION_MODAL);
+        aboutStage.initStyle(StageStyle.UNDECORATED);
+
+        ImageView icon = new ImageView(new Image("/assets/tairitsu_icon.png"));
+        icon.setFitWidth(64);
+        icon.setFitHeight(64);
+        icon.setPreserveRatio(true);
+
+        Label appName = new Label("Tainote");
+        appName.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+
+        Label version = new Label("Version 1.0.0");
+        version.setStyle("-fx-font-size: 12px; -fx-text-fill: gray;");
+
+        Label description = new Label("""
+        Tainote is a lightweight note-taking app built for writers
+        who want to track their progress. Features WPM tracking,
+        note syncing, and a clean distraction-free writing experience.
+        """);
+        description.setStyle("-fx-font-size: 13px;");
+
+        Label author = new Label("Made by dekxi");
+        author.setStyle("-fx-font-size: 12px; -fx-text-fill: gray;");
+
+        Separator separator = new Separator();
+
+        Button closeBtn = new Button("Close");
+        closeBtn.setOnAction(_ -> aboutStage.close());
+        VBox content = new VBox(10, icon, appName, version, description, separator, author, closeBtn, featureList);
+        content.setAlignment(Pos.CENTER);
+        content.setStyle("""
+            -fx-padding: 28;
+            -fx-background-color: white;
+            -fx-background-radius: 8;
+            -fx-border-color: #cccccc;
+            -fx-border-width: 1;
+            -fx-border-radius: 8;
+        """);
+
+        VBox bordered = new VBox(content);
+        bordered.setStyle("-fx-border-color: #cccccc; -fx-border-width: 1; -fx-background-color: white;");
+
+        aboutStage.setScene(new Scene(bordered));
+        return aboutStage;
+    }
+    public static void showWarning(String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(NodeConfig.WARNING_TITLE);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.setGraphic(buildIcon(NodeConfig.ICON_SIZE_LARGE));
         alert.showAndWait();
     }
 
     public static boolean continuePromptFromUnsavedChanges() {
         Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
-        dialog.setTitle(DialogConfig.CONFIRM_TITLE);
-        dialog.setHeaderText(DialogConfig.UNSAVED_HEADER);
-        dialog.setContentText(DialogConfig.UNSAVED_CONTENT);
-        dialog.setGraphic(buildIcon(DialogConfig.ICON_SIZE_SMALL));
+        dialog.setTitle(NodeConfig.CONFIRM_TITLE);
+        dialog.setHeaderText(NodeConfig.UNSAVED_HEADER);
+        dialog.setContentText(NodeConfig.UNSAVED_CONTENT);
+        dialog.setGraphic(buildIcon(NodeConfig.ICON_SIZE_SMALL));
 
-        ButtonType continueBtn = new ButtonType(DialogConfig.UNSAVED_CONTINUE_BTN);
-        ButtonType cancelBtn = new ButtonType(DialogConfig.CANCEL_BTN, ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType continueBtn = new ButtonType(NodeConfig.UNSAVED_CONTINUE_BTN);
+        ButtonType cancelBtn = new ButtonType(NodeConfig.CANCEL_BTN, ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getButtonTypes().setAll(continueBtn, cancelBtn);
 
         Optional<ButtonType> result = dialog.showAndWait();
@@ -42,13 +160,13 @@ public class DialogBuilder {
 
     public static boolean confirmImportOverwrite() {
         Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
-        dialog.setTitle(DialogConfig.CONFIRM_TITLE);
-        dialog.setHeaderText(DialogConfig.IMPORT_OVERWRITE_HEADER);
-        dialog.setContentText(DialogConfig.IMPORT_OVERWRITE_CONTENT);
-        dialog.setGraphic(buildIcon(DialogConfig.ICON_SIZE_SMALL));
+        dialog.setTitle(NodeConfig.CONFIRM_TITLE);
+        dialog.setHeaderText(NodeConfig.IMPORT_OVERWRITE_HEADER);
+        dialog.setContentText(NodeConfig.IMPORT_OVERWRITE_CONTENT);
+        dialog.setGraphic(buildIcon(NodeConfig.ICON_SIZE_SMALL));
 
-        ButtonType updateBtn = new ButtonType(DialogConfig.IMPORT_OVERWRITE_UPDATE_BTN);
-        ButtonType cancelBtn = new ButtonType(DialogConfig.CANCEL_BTN, ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType updateBtn = new ButtonType(NodeConfig.IMPORT_OVERWRITE_UPDATE_BTN);
+        ButtonType cancelBtn = new ButtonType(NodeConfig.CANCEL_BTN, ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getButtonTypes().setAll(updateBtn, cancelBtn);
 
         Optional<ButtonType> result = dialog.showAndWait();
@@ -68,7 +186,7 @@ public class DialogBuilder {
         return result.isPresent() && result.get() == deleteBtn;
     }
     private static ImageView buildIcon(int size) {
-        Image image = new Image(DialogBuilder.class.getResource(DialogConfig.WARNING_ICON).toExternalForm());
+        Image image = new Image(NodeBuilder.class.getResource(NodeConfig.WARNING_ICON).toExternalForm());
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(size);
         imageView.setFitHeight(size);

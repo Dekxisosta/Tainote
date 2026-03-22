@@ -1,4 +1,4 @@
-package com.dekxi.tainote.handler;
+package com.dekxi.tainote.handler.main;
 
 import javafx.geometry.*;
 import javafx.scene.control.*;

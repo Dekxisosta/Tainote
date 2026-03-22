@@ -1,4 +1,4 @@
-package com.dekxi.tainote.app;
+package com.dekxi.tainote.config;
 
 // Will put in a .properties file later on, or a .txt
 public final class StyleConfig {

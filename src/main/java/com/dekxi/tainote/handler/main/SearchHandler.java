@@ -1,4 +1,4 @@
-package com.dekxi.tainote.handler;
+package com.dekxi.tainote.handler.main;
 
 import com.dekxi.tainote.db.*;
 import com.dekxi.tainote.model.*;

@@ -2,7 +2,7 @@ package com.dekxi.tainote.model;
 
 import java.util.*;
 
-public record TainoteModel(
+public record Tainote(
         String id,
         String title,
         String author,

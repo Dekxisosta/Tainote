@@ -1,6 +1,6 @@
-package com.dekxi.tainote.handler;
+package com.dekxi.tainote.handler.counter;
 
-import javafx.animation.*;
+import com.dekxi.tainote.app.*;
 import javafx.scene.control.*;
 
 public class WPMHandler {
@@ -9,13 +9,16 @@ public class WPMHandler {
     private long totalChars;
     private static final long IDLE_THRESHOLD = 1500;
 
+    private AppState appState;
     private Label wpmLabel;
     private TextArea textArea;
 
     public WPMHandler(
+            AppState appState,
             Label wpmLabel,
             TextArea textArea
     ){
+        this.appState = appState;
         this.wpmLabel = wpmLabel;
         this.textArea = textArea;
 
@@ -24,6 +27,7 @@ public class WPMHandler {
 
     private void setUpWpmLabel(){
         textArea.textProperty().addListener((_, _, newVal) -> {
+            if(appState.isLoadingNote()) return;
             long now = System.currentTimeMillis();
             if (lastKeystrokeTime != -1) {
                 long gap = now - lastKeystrokeTime;

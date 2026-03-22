@@ -1,60 +1,111 @@
 package com.dekxi.tainote.controller;
 
+import com.dekxi.tainote.app.*;
+import com.dekxi.tainote.config.*;
+import com.dekxi.tainote.db.*;
+import com.dekxi.tainote.handler.counter.*;
+import com.dekxi.tainote.handler.io.*;
+import com.dekxi.tainote.handler.main.*;
+import com.dekxi.tainote.handler.state.*;
+import com.dekxi.tainote.handler.ui.*;
 import com.dekxi.tainote.manager.*;
-import com.dekxi.tainote.config.ConfigManager;
+import com.dekxi.tainote.model.*;
+import javafx.animation.*;
 import javafx.application.*;
+import javafx.concurrent.*;
 import javafx.fxml.*;
 
 import javafx.scene.control.*;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.*;
-import javafx.scene.input.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.*;
-import javafx.scene.text.*;
 import javafx.stage.*;
-import org.fxmisc.richtext.*;
+import javafx.util.*;
 
-import java.io.*;
-import java.nio.file.*;
 import java.util.*;
+import java.util.stream.*;
 
-public class Controller {
+public class MainController {
     private HostServices hostServices;
-    private ConfigManager config;
-    private TainoteManager manager;
-    private Stage stage;
 
+    // STATE HOLDER
+    private AppState appState;
+
+    // MANAGERS
+    private ConfigManager config;
+    private TainoteManager tainoteManager;
+    private DatabaseManager databaseManager;
+
+    // HANDLERS
+    private StyleHandler styleHandler;
+    private CounterHandler counterHandler;
+    private ListHandler listHandler;
+    private DanceHandler danceHandler;
+    private WPMHandler wpmHandler;
+    private SearchHandler searchHandler;
+    private TagHandler tagHandler;
+    private AboutHandler aboutHandler;
+
+    private CreateHandler createHandler;
+    private DeleteHandler deleteHandler;
+    private SaveHandler saveHandler;
+    private ImportHandler importHandler;
+    private ExportHandler exportHandler;
+    private SyncHandler syncHandler;
+
+    private EditorStateHandler editorStateHandler;
+
+    private Stage stage;
+    private List<String> currentTags = new ArrayList<>();
     private Runnable onClose;
 
-    @FXML @SuppressWarnings("unused")
-    private ColorPicker colorPicker;
 
-    @FXML @SuppressWarnings("unused")
-    private ComboBox<String> fontComboBox;
+    // ── Editor ────────────────────────────────────────
+    @FXML @SuppressWarnings("unused") private TextArea textArea;
+    @FXML @SuppressWarnings("unused") private HBox editorContainer;
+    @FXML @SuppressWarnings("unused") private ColorPicker colorPicker;
+    @FXML @SuppressWarnings("unused") private ComboBox<String> fontComboBox;
+    @FXML @SuppressWarnings("unused") private Spinner<Integer> fontSizeSpinner;
 
-    @FXML @SuppressWarnings("unused")
-    private Spinner<Integer> fontSizeSpinner;
+    // ── Note Metadata ──────────────────────────────────
+    @FXML @SuppressWarnings("unused") private TextField titleField;
+    @FXML @SuppressWarnings("unused") private TextField authorNameField;
+    @FXML @SuppressWarnings("unused") private TextField statusField;
 
-    @FXML @SuppressWarnings("unused")
-    private StackPane imageContainer;
+    // ── Tags ───────────────────────────────────────────
+    @FXML @SuppressWarnings("unused") private FlowPane tagChipPane;
+    @FXML @SuppressWarnings("unused") private TextField tagTextField;
 
-    @FXML @SuppressWarnings("unused")
-    private ImageView imageView;
+    // ── Sidebar ────────────────────────────────────────
+    @FXML @SuppressWarnings("unused") private ListView<TainotePreview> listView;
+    @FXML @SuppressWarnings("unused") private TextField searchField;
+    @FXML @SuppressWarnings("unused") private ComboBox<String> filterComboBox;
+    @FXML @SuppressWarnings("unused") private ImageView taiDancingImageView;
+    @FXML @SuppressWarnings("unused") private StackPane imageContainer;
 
-    @FXML @SuppressWarnings("unused")
-    private MenuItem newNoteMenuItem;
+    // ── Status Bar ─────────────────────────────────────
+    @FXML @SuppressWarnings("unused") private Label charCountLabel;
+    @FXML @SuppressWarnings("unused") private Label wordCountLabel;
+    @FXML @SuppressWarnings("unused") private Label uniqueWordCountLabel;
+    @FXML @SuppressWarnings("unused") private Label timeStartedLabel;
+    @FXML @SuppressWarnings("unused") private Label timeElapsedLabel;
+    @FXML @SuppressWarnings("unused") private Label zoomLabel;
+    @FXML @SuppressWarnings("unused") private Label wpmLabel;
 
-    @FXML @SuppressWarnings("unused")
-    private MenuItem openNoteMenuItem;
+    // ── Menu Items ─────────────────────────────────────
+    @FXML @SuppressWarnings("unused") private MenuItem newMenuItem;
+    @FXML @SuppressWarnings("unused") private MenuItem importMenuItem;
+    @FXML @SuppressWarnings("unused") private MenuItem exportMenuItem;
+    @FXML @SuppressWarnings("unused") private MenuItem saveMenuItem;
+    @FXML @SuppressWarnings("unused") private MenuItem syncMenuItem;
+    @FXML @SuppressWarnings("unused") private MenuItem deleteMenuItem;
+    @FXML @SuppressWarnings("unused") private MenuItem findReplaceMenuItem;
+    @FXML @SuppressWarnings("unused") private MenuItem aboutMenuItem;
+    @FXML @SuppressWarnings("unused") private MenuItem redirectMenuItem;
+    @FXML @SuppressWarnings("unused") private MenuItem keyConfigMenuItem;
+    @FXML @SuppressWarnings("unused") private MenuItem donateMenuItem;
 
-    @FXML @SuppressWarnings("unused")
-    private MenuItem aboutMenuItem;
-
-    @FXML @SuppressWarnings("unused")
-    private InlineCssTextArea editor;
-
-    @FXML @SuppressWarnings("unused")
-    public void initialize(){}
+    @FXML @SuppressWarnings("unused") public void initialize(){}
     public void onClose(){
         onClose.run();
     }
@@ -65,159 +116,25 @@ public class Controller {
         this.stage = stage;
     }
     public void setConfigManager(ConfigManager config){this.config = config;}
-    public void setTainoteManager(TainoteManager manager){this.manager = manager;}
+    public void setTainoteManager(TainoteManager tainoteManager){this.tainoteManager = tainoteManager;}
+    public void setDatabaseManager(DatabaseManager databaseManager){this.databaseManager = databaseManager;}
     public void setHostServices(HostServices hostServices) {this.hostServices = hostServices;}
-    /*
-     * ==========================================
-     * Tainote Note-taking CRUD Operations
-     * ==========================================
-     */
-    @FXML @SuppressWarnings("unused")
-    private void createNewTainote(){
-    }
-    @FXML @SuppressWarnings("unused")
-    private void openTainote(){
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open File");
 
-        File file = fileChooser.showOpenDialog(stage);
-        if(file != null) {
-            try{
-                UUID id = manager.checkFileIfTainote(file);
-                Map<String, String> parsed = manager.readTainote(id);
-            }catch(IllegalArgumentException e){
-                showWarning("Tainote Check Error", e.getMessage());
-            }
-        }
-    }
-    @FXML @SuppressWarnings("unused")
-    private void saveTainote(){
-
-    }
-    @FXML @SuppressWarnings("unused")
-    private void deleteTainote(){
-
-    }
-
-
-    /*
-     * ==========================================
-     * Tainote Set Up Injected FX Fields
-     * ==========================================
-     */
-    public void setDefaults(){
-        setUpImageView();
-        setUpFontSizeSpinner();
-        setUpFontComboBox();
-        setUpAboutMenuItem();
-        setUpColorPicker();
-        setUpEditor();
-    }
-    private void setUpEditor(){
-        editor.setStyle(String.format("""
-                -fx-background-color: #191a1f;
-                -fx-padding: 10;"
-                -fx-border-color: #444;
-                -fx-border-width: 1;
-                -fx-text-fill: %s;
-                """));
-    }
-    private void setUpAboutMenuItem(){
-        aboutMenuItem.setOnAction(_ -> hostServices.showDocument("https://github.com/Dekxisosta"));
-    }
-    private void setUpImageView(){
-        Image image = new Image(getClass().getResourceAsStream("/assets/tai_dancing.gif"));
-        imageView.setImage(image);
-    }
-    private void setUpFontSizeSpinner(){
-        setUpFontSizeSpinnerValues();
-        setUpFontSizeSpinnerEditor();
-        setUpFontSizeSpinnerArrowListener();
-    }
-    private void setUpFontSizeSpinnerValues(){
-        fontSizeSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,1024, config.getFontSize()));
-    }
-    private void setUpFontSizeSpinnerEditor(){
-
-        fontSizeSpinner.getEditor().setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                try {
-                    int newSize = Integer.parseInt(fontSizeSpinner.getEditor().getText());
-                    fontSizeSpinner.getValueFactory().setValue(newSize);
-                    fontSizeSpinner.getEditor().positionCaret(fontSizeSpinner.getEditor().getText().length());
-                    config.setFontSize(newSize);
-
-                } catch (NumberFormatException e) {
-                    if(fontSizeSpinner.getEditor().getText().length() == 0) fontSizeSpinner.getValueFactory().setValue(config.getFontSize());
-                    else fontSizeSpinner.getEditor().setText(fontSizeSpinner.getValue().toString());
-                }
-            }
-        });
-    }
-    private void setUpFontSizeSpinnerArrowListener(){
-        fontSizeSpinner.valueProperty().addListener((_, _, newValue) -> {
-            config.setFontSize(newValue);
-        });
-    }
-    private void setUpColorPicker(){
-        setUpColorPickerValues();
-        setUpColorPickerHandler();
-    }
-    private void setUpColorPickerValues(){
-        colorPicker.setValue(config.getFontColor());
-    }
-    private void setUpColorPickerHandler(){
-        colorPicker.setOnAction(_ -> {
-            Color selected = colorPicker.getValue();
-            String rgb = String.format("rgb(%d, %d, %d)",
-                    (int)(selected.getRed() * 255),
-                    (int)(selected.getGreen() * 255),
-                    (int)(selected.getBlue() * 255));
-            config.setFontColor(selected);
-        });
-    }
-    private void setUpFontComboBox(){
-        setUpFontComboBoxValues();
-        setUpFontComboBoxHandler();
-    }
-    private void setUpFontComboBoxValues(){
-        fontComboBox.setValue(config.getFontStyle());
-        fontComboBox.getItems().addAll(Font.getFamilies());
-    }
-    private void setUpFontComboBoxHandler(){
-        fontComboBox.setOnAction(_ -> {
-            config.setFontStyle(fontComboBox.getValue());
-        });
-    }
-
-    /*
-     * ==========================================
-     * Tainote FX Utilities
-     * ==========================================
-     */
-    private void showWarning(String header, String content){
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning");
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
-    private boolean continuePromptFromUnsavedChanges(){
-        Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
-        dialog.setTitle("Warning");
-        dialog.setHeaderText("Unsaved changes");
-        dialog.setContentText("You have unsaved changes. Do you want to continue?");
-
-        ButtonType continueBtn = new ButtonType("Continue");
-        ButtonType cancelBtn = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        dialog.getButtonTypes().setAll(continueBtn, cancelBtn);
-
-        Optional<ButtonType> result = dialog.showAndWait();
-
-        if (result.isPresent() && result.get() == continueBtn) return true;
-        else return false;
-    }
-
-
+    public void initAppState(){this.appState = new AppState();}
+    public void initStyleParser(){this.styleHandler = new StyleHandler(config, textArea, fontComboBox, fontSizeSpinner, colorPicker);}
+    public void initCounterHandler(){this.counterHandler = new CounterHandler(textArea, charCountLabel, wordCountLabel, uniqueWordCountLabel, timeStartedLabel, timeElapsedLabel, zoomLabel, wpmLabel);}
+    public void initListHandler(){this.listHandler = new ListHandler(appState, databaseManager, tainoteManager, textArea, titleField, authorNameField, statusField, listView);}
+    public void initDanceHandler(){this.danceHandler = new DanceHandler(taiDancingImageView, textArea);}
+    public void initWPMHandler(){this.wpmHandler = new WPMHandler(appState, wpmLabel, textArea);}
+    public void initSearchHandler(){this.searchHandler = new SearchHandler(filterComboBox, databaseManager, searchField, listView);}
+    public void initTagHandler(){this.tagHandler = new TagHandler(tagChipPane, tagTextField);}
+    public void initCreateHandler() {this.createHandler = new CreateHandler(newMenuItem, appState, titleField, textArea, listView);}
+    public void initDeleteHandler() {this.deleteHandler = new DeleteHandler(deleteMenuItem, tainoteManager, databaseManager, appState, titleField, textArea, listView);}
+    public void initSaveHandler() {this.saveHandler = new SaveHandler(saveMenuItem, tainoteManager, databaseManager, appState, titleField, authorNameField, statusField, textArea, listView, stage);}
+    public void initImportHandler(){this.importHandler = new ImportHandler(importMenuItem, tainoteManager, stage);}
+    public void initExportHandler(){this.exportHandler = new ExportHandler(exportMenuItem, tainoteManager, appState, stage);}
+    public void initEditorStateHandler(){this.editorStateHandler = new EditorStateHandler(appState, textArea, titleField, authorNameField, statusField);}
+    public void initSyncHandler() {this.syncHandler = new SyncHandler(syncMenuItem, tainoteManager, databaseManager, listView, stage);}
+    public void initAboutHandler(){this.aboutHandler = new AboutHandler(aboutMenuItem, stage);}
+    public void initApp(){appState.setCurrentNoteId(UUID.randomUUID());}
 }

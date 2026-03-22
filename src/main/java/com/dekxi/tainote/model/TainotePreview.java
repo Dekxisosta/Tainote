@@ -1,4 +1,8 @@
 package com.dekxi.tainote.model;
 
-public class TainotePreview {
-}
+public record TainotePreview(
+        String id,
+        String title,
+        String author,
+        String modified
+) {}

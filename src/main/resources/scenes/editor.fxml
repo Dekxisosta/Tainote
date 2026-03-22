@@ -10,14 +10,17 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
@@ -28,16 +31,16 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="820.0" prefWidth="1216.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dekxi.tainote.controller.MainController">
    <children>
-      <VBox prefHeight="200.0" prefWidth="100.0">
+      <VBox minHeight="-Infinity" prefHeight="800.0" prefWidth="100.0">
          <children>
-            <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="75.0" prefWidth="200.0">
+            <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="75.0" prefWidth="200.0">
                <children>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/tairitsu_icon.png" />
                      </image>
                      <HBox.margin>
-                        <Insets left="20.0" />
+                        <Insets left="20.0" top="10.0" />
                      </HBox.margin>
                   </ImageView>
                   <VBox prefHeight="200.0" prefWidth="100.0">
@@ -47,7 +50,7 @@
                               <TextField fx:id="titleField" alignment="BASELINE_LEFT" prefHeight="25.0" prefWidth="375.0" promptText="Enter title..." HBox.hgrow="ALWAYS" />
                            </children>
                            <padding>
-                              <Insets left="30.0" right="30.0" />
+                              <Insets left="30.0" right="30.0" top="10.0" />
                            </padding>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
@@ -56,31 +59,34 @@
                                 <menus>
                                   <Menu mnemonicParsing="false" style="-fx-text-fill: white; -fx-font-family: &quot;Consolas&quot;;" text="File">
                                     <items>
-                                      <MenuItem fx:id="newNoteMenuItem" mnemonicParsing="false" onAction="#createNewTainote" text="New" />
-                                          <MenuItem fx:id="openNoteMenuItem" mnemonicParsing="false" onAction="#openTainote" text="Open" />
-                                          <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" onAction="#saveTainote" text="Save" />
+                                      <MenuItem fx:id="newMenuItem" mnemonicParsing="false" text="New" />
+                                          <MenuItem fx:id="importMenuItem" mnemonicParsing="false" text="Import" />
+                                          <MenuItem fx:id="exportMenuItem" mnemonicParsing="false" text="Export" />
+                                          <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" text="Save" />
+                                          <SeparatorMenuItem mnemonicParsing="false" />
+                                          <MenuItem fx:id="syncMenuItem" mnemonicParsing="false" text="Sync" />
                                     </items>
                                   </Menu>
                                   <Menu mnemonicParsing="false" style="-fx-font-family: 'Consolas';" text="Edit">
                                     <items>
-                                      <MenuItem mnemonicParsing="false" text="Delete" />
+                                          <MenuItem fx:id="selectAllMenuItem" mnemonicParsing="false" text="Select All" />
+                                          <MenuItem fx:id="findReplaceMenuItem" mnemonicParsing="false" text="Find / Replace" />
+                                          <MenuItem fx:id="deleteMenuItem" mnemonicParsing="false" text="Delete" />
                                     </items>
                                   </Menu>
-                                    <Menu mnemonicParsing="false" style="-fx-text-fill: white; -fx-font-family: &quot;Consolas&quot;;" text="View">
+                                    <Menu mnemonicParsing="false" style="-fx-text-fill: white; -fx-font-family: &quot;Consolas&quot;;" text="Themes">
                                        <items>
-                                          <MenuItem fx:id="newNoteMenuItem1" mnemonicParsing="false" onAction="#createNewTainote" text="New" />
-                                          <MenuItem fx:id="openNoteMenuItem1" mnemonicParsing="false" onAction="#openTainote" text="Open" />
-                                       </items>
-                                    </Menu>
-                                    <Menu mnemonicParsing="false" style="-fx-text-fill: white; -fx-font-family: &quot;Consolas&quot;;" text="Format">
-                                       <items>
-                                          <MenuItem fx:id="newNoteMenuItem11" mnemonicParsing="false" onAction="#createNewTainote" text="New" />
-                                          <MenuItem fx:id="openNoteMenuItem11" mnemonicParsing="false" onAction="#openTainote" text="Open" />
+                                          <MenuItem mnemonicParsing="false" text="Light Theme" />
+                                          <MenuItem mnemonicParsing="false" text="Chaos Theme" />
+                                          <MenuItem mnemonicParsing="false" text="Sakura Theme" />
                                        </items>
                                     </Menu>
                                   <Menu mnemonicParsing="false" style="-fx-font-family: 'Consolas';" text="Help">
                                     <items>
-                                      <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="About" />
+                                          <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="About Tainote" />
+                                      <MenuItem fx:id="redirectMenuItem" mnemonicParsing="false" text="Github" />
+                                          <MenuItem fx:id="keyConfigMenuItem" mnemonicParsing="false" text="Key Configuration" />
+                                          <MenuItem fx:id="donateMenuItem" mnemonicParsing="false" text="Donate" />
                                     </items>
                                   </Menu>
                                 </menus>
@@ -92,29 +98,46 @@
                                  </HBox.margin>
                               </MenuBar>
                            </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
                         </HBox>
                      </children>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/avatar.jpg" />
-                     </image>
+                  <VBox prefHeight="81.0" prefWidth="526.0" HBox.hgrow="ALWAYS" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/avatar.jpg" />
+                           </image>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <VBox alignment="CENTER" minWidth="-Infinity" prefHeight="55.0" prefWidth="120.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <TextField fx:id="authorNameField" promptText="Author Name">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <TextField fx:id="statusField" promptText="Status" />
+                           </children>
+                        </VBox>
+                     </children>
                      <HBox.margin>
-                        <Insets right="20.0" />
+                        <Insets bottom="10.0" right="20.0" top="10.0" />
                      </HBox.margin>
-                  </ImageView>
+                  </HBox>
                </children>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
             </HBox>
             <VBox prefHeight="1200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
                <children>
-                  <SplitPane dividerPositions="0.8154859967051071" prefHeight="700.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                  <SplitPane dividerPositions="0.75" prefHeight="700.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                     <items>
                         <VBox prefHeight="776.0" prefWidth="781.0">
                            <children>
@@ -133,25 +156,25 @@
                                        </effect></ColorPicker>
                                 </items>
                               </ToolBar>
-                              <HBox fx:id="editorContainer" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                              <HBox fx:id="editorContainer" maxWidth="1.7976931348623157E308" prefHeight="350.0" prefWidth="987.0" VBox.vgrow="ALWAYS">
                                  <children>
-<!--                                     <InlineCssTextArea fx:id="editor" prefHeight="665.0" prefWidth="1075.0" style="-fx-background-color: #191a1f; -fx-control-inner-background: #191a1f;" VBox.vgrow="ALWAYS" />-->
+                                    <TextArea fx:id="textArea" prefHeight="421.0" prefWidth="987.0" promptText="Type and let your creativity shine through!..." HBox.hgrow="ALWAYS" />
                                  </children>
                               </HBox>
                               <Separator prefWidth="200.0" />
                               <Separator prefWidth="1008.0" />
                               <ToolBar prefHeight="0.0" prefWidth="987.0" style="-fx-background-color: #191a1f;">
                                  <items>
-                                    <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="10.0" prefWidth="100.0" style="-fx-text-fill: white;">
+                                    <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="17.0" prefWidth="64.0" style="-fx-text-fill: white;">
                                        <children>
-                                          <Label text="Char Count: " textFill="WHITE" HBox.hgrow="ALWAYS" />
+                                          <Label text="Char: " textFill="WHITE" HBox.hgrow="ALWAYS" />
                                           <Label fx:id="charCountLabel" text="null" textFill="WHITE" HBox.hgrow="ALWAYS" />
                                        </children>
                                     </HBox>
                                     <Label text="|" textFill="WHITE" />
-                                    <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="10.0" prefWidth="100.0">
+                                    <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="17.0" prefWidth="63.0">
                                        <children>
-                                          <Label text="Word Count: " textFill="WHITE" HBox.hgrow="ALWAYS" />
+                                          <Label text="Word: " textFill="WHITE" HBox.hgrow="ALWAYS" />
                                           <Label fx:id="wordCountLabel" text="null" textFill="WHITE" HBox.hgrow="ALWAYS" />
                                        </children>
                                     </HBox>
@@ -163,7 +186,7 @@
                                        </children>
                                     </HBox>
                                     <Label text="|" textFill="WHITE" />
-                                    <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="10.0" prefWidth="150.0">
+                                    <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="17.0" prefWidth="149.0">
                                        <children>
                                           <Label text="Session Elapsed: " textFill="WHITE" HBox.hgrow="ALWAYS" />
                                           <Label fx:id="timeElapsedLabel" text="null" textFill="WHITE" HBox.hgrow="ALWAYS" />
@@ -176,54 +199,70 @@
                                           <Label fx:id="timeStartedLabel" text="null" textFill="WHITE" HBox.hgrow="ALWAYS" />
                                        </children>
                                     </HBox>
+                                    <Label text="|" textFill="WHITE" />
+                                    <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="17.0" prefWidth="66.0">
+                                       <children>
+                                          <Label text="WPM: " textFill="WHITE" HBox.hgrow="ALWAYS" />
+                                          <Label fx:id="wpmLabel" text="null" textFill="WHITE" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
                                  </items>
                               </ToolBar>
                            </children>
                         </VBox>
-                        <VBox maxHeight="1.7976931348623157E308" maxWidth="400.0" minWidth="-Infinity" prefHeight="726.0" prefWidth="221.0">
-                           <children>
-                              <TextField promptText="Search..." style="-fx-margin: 20;" />
-                              <SplitPane dividerPositions="0.4627906976744186" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" VBox.vgrow="ALWAYS">
-                                 <items>
-                                    <VBox prefHeight="200.0" prefWidth="100.0">
-                                       <children>
-                                          <Label maxWidth="1.7976931348623157E308" style="-fx-font-family: &quot;Consolas&quot;;" text="Results based on Search">
-                                             <padding>
-                                                <Insets bottom="2.5" left="10.0" right="10.0" top="2.5" />
-                                             </padding>
-                                          </Label>
-                                          <ListView prefHeight="279.0" prefWidth="300.0" VBox.vgrow="ALWAYS" />
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="200.0" prefWidth="100.0">
-                                       <children>
-                                          <Label maxWidth="1.7976931348623157E308" style="-fx-font-family: &quot;Consolas&quot;;" text="Recently updated Tainotes">
-                                             <padding>
-                                                <Insets bottom="2.5" left="10.0" right="10.0" top="2.5" />
-                                             </padding>
-                                          </Label>
-                                          <ListView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                                       </children>
-                                    </VBox>
-                                 </items>
-                              </SplitPane>
-                              <VBox prefHeight="256.0" prefWidth="221.0">
+                        <SplitPane dividerPositions="0.2" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="516.0">
+                           <items>
+                              <VBox alignment="CENTER" maxWidth="-Infinity" prefHeight="726.0" prefWidth="200.0">
                                  <children>
+                                    <ImageView fx:id="taiDancingImageView" fitHeight="181.0" fitWidth="193.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/tai_dancing-0.png" />
+                                       </image>
+                                    </ImageView>
                                     <Label maxWidth="1.7976931348623157E308" prefWidth="221.0" style="-fx-font-family: &quot;Consolas&quot;;" text="Registered Tags">
                                        <padding>
                                           <Insets bottom="2.5" left="10.0" right="10.0" top="2.5" />
                                        </padding>
                                     </Label>
-                                    <ListView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                                    <TextField fx:id="tagTextField" promptText="Enter tag name..." />
+                                    <FlowPane fx:id="tagChipPane" prefHeight="200.0" prefWidth="200.0" style="-fx-padding: 10;" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
-                           </children>
-                        </VBox>
+                              <VBox maxHeight="1.7976931348623157E308" maxWidth="400.0" minWidth="-Infinity" prefHeight="726.0" prefWidth="221.0">
+                                 <children>
+                                    <TextField fx:id="searchField" promptText="Search..." style="-fx-margin: 20;" />
+                                    <SplitPane orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" VBox.vgrow="ALWAYS">
+                                       <items>
+                                          <VBox prefHeight="699.0" prefWidth="203.0">
+                                             <children>
+                                                <HBox maxHeight="-Infinity" prefHeight="26.0" prefWidth="219.0">
+                                                   <children>
+                                                      <Label maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="219.0" style="-fx-font-family: &quot;Consolas&quot;;" text="Tainotes List">
+                                                         <padding>
+                                                            <Insets bottom="2.5" left="10.0" right="10.0" top="2.5" />
+                                                         </padding>
+                                                      </Label>
+                                                      <ComboBox fx:id="filterComboBox" prefWidth="150.0" promptText="Filter" visibleRowCount="5">
+                                                         <HBox.margin>
+                                                            <Insets right="5.0" />
+                                                         </HBox.margin>
+                                                      </ComboBox>
+                                                   </children>
+                                                </HBox>
+                                                <ListView fx:id="listView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="184.0" VBox.vgrow="ALWAYS" />
+                                             </children>
+                                          </VBox>
+                                       </items>
+                                    </SplitPane>
+                                 </children>
+                              </VBox>
+                           </items>
+                        </SplitPane>
                     </items>
                   </SplitPane>
                </children>
             </VBox>
-            <HBox style="-fx-background-color: #191a1f;">
+            <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" style="-fx-background-color: #191a1f;">
                <children>
                   <Label text="© 2026 Dekxi. All rights reserved." textFill="WHITE">
                      <padding>
@@ -231,6 +270,8 @@
                      </padding>
                   </Label>
                   <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                  <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="10.0" prefWidth="70.0" />
+                  <Label text="|" textFill="WHITE" />
                   <Label text="UTF-8" textFill="WHITE">
                      <padding>
                         <Insets left="10.0" right="10.0" />

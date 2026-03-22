@@ -1,4 +1,4 @@
-package com.dekxi.tainote.config;
+package com.dekxi.tainote.app;
 
 import java.nio.file.*;
 

@@ -1,6 +1,6 @@
-package com.dekxi.tainote.handler;
+package com.dekxi.tainote.handler.main;
 
-import com.dekxi.tainote.config.*;
+import com.dekxi.tainote.app.*;
 import com.dekxi.tainote.db.*;
 import com.dekxi.tainote.manager.*;
 import com.dekxi.tainote.model.*;
@@ -12,7 +12,8 @@ import javafx.scene.layout.*;
 
 import java.util.*;
 
-import static com.dekxi.tainote.util.DialogBuilder.showWarning;
+import static com.dekxi.tainote.util.NodeBuilder.continuePromptFromUnsavedChanges;
+import static com.dekxi.tainote.util.NodeBuilder.showWarning;
 
 public class ListHandler {
     private AppState appState;
@@ -67,7 +68,6 @@ public class ListHandler {
                     icon.setFitHeight(32);
                     icon.setPreserveRatio(true);
 
-                    // title row — title + author side by side
                     HBox titleRow = new HBox(8);
                     titleRow.setAlignment(Pos.CENTER_LEFT);
                     Label title = new Label(item.title());
@@ -110,23 +110,35 @@ public class ListHandler {
         });
         listView.setOnMouseClicked(_ -> {
             TainotePreview selected = listView.getSelectionModel().getSelectedItem();
-            if(selected==null) return;
+            if (selected == null) return;
 
-            Tainote note = tainoteManager.readTainote(UUID.fromString(selected.id()));
+            if (appState.hasUnsavedChanges()) {
+                if (!continuePromptFromUnsavedChanges()) return;
+            }
+            UUID uuid = UUID.fromString(selected.id());
+
+            Tainote note = tainoteManager.readTainote(uuid);
             if (note == null) {
                 showWarning("Note not found.", "The selected Tainote could not be loaded. It may have been moved or deleted.");
                 return;
             }
             try {
-                appState.setCurrentNoteId(UUID.fromString(selected.id()));
+                appState.setCurrentNoteId(uuid);
+                appState.setLastSavedTainote(note);
+                appState.setHasUnsavedChanges(false);
             } catch (IllegalArgumentException e) {
                 showWarning("Invalid Tainote.", "The selected Tainote has a corrupted ID and cannot be opened.");
                 return;
             }
+            appState.setIsLoadingNote(true);
+
             titleField.setText(note.title());
             textArea.setText(note.content());
-            if(!note.author().equals("Anonymous Author")) authorNameField.setText(note.author());
-            if(!note.status().equals("Undecided")) statusField.setText(note.status());
+            authorNameField.setText(note.author());
+            statusField.setText(note.status());
+            appState.setHasUnsavedChanges(false);
+
+            appState.setIsLoadingNote(false);
         });
         listView.getItems().setAll(databaseManager.getAllNotes());
     }

@@ -1,13 +1,16 @@
 package com.dekxi.tainote.db;
 
+import com.dekxi.tainote.model.*;
+
 import java.sql.*;
 import java.util.*;
 
-public class TainoteDB {
+public class DatabaseManager {
     private static final String URL = "jdbc:sqlite:tainote.db";
     private Connection conn;
+    private static final boolean IS_DEBUG = true;
 
-    public TainoteDB(){
+    public DatabaseManager(){
         connect();
         initSchema();
     }
@@ -31,6 +34,7 @@ public class TainoteDB {
                     createdAt,
                     modifiedAt
             );
+            System.out.println("Attempted to modify note instead of insertion...");
             return;
         }
         String sql = """
@@ -62,10 +66,37 @@ public class TainoteDB {
     public void deleteNote(
             String id
     ){
+        if(conn == null) return;
         if(!noteExists(id)) return;
         String sql = """
                 DELETE FROM notes WHERE id = ?;
         """;
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, id);
+            pstmt.executeUpdate();
+            System.out.println("SQL: " + id);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public List<TainotePreview> getAllNotes() {
+        if (conn == null) return new ArrayList<>();
+        String sql = "SELECT id, title, author, status, created_at, modified_at FROM notes ORDER BY modified_at DESC";
+        List<TainotePreview> notes = new ArrayList<>();
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                notes.add(new TainotePreview(
+                        rs.getString("id"),
+                        rs.getString("title"),
+                        rs.getString("author"),
+                        rs.getString("modified_at")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return notes;
     }
 
     public void modifyNote(
@@ -83,8 +114,8 @@ public class TainoteDB {
                 title = ?,
                 author = ?,
                 status = ?,
-                created = ?,
-                modified = ?,
+                created_at = ?,
+                modified_at = ?,
                 content = ?
             WHERE id = ?;
             """;
@@ -101,7 +132,86 @@ public class TainoteDB {
             e.printStackTrace();
         }
     }
+    public List<TainotePreview> searchAll(String query) {
+        if (conn == null) return new ArrayList<>();
+        String sql = """
+            SELECT DISTINCT n.id, n.title, n.author, n.modified_at
+            FROM notes n
+            LEFT JOIN tags t ON n.id = t.note_id
+            WHERE n.title LIKE ? OR n.content LIKE ? OR n.author LIKE ? OR t.tag LIKE ?
+            ORDER BY n.modified_at DESC
+            """;
+        List<TainotePreview> notes = new ArrayList<>();
+        String q = "%" + query + "%";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, q);
+            pstmt.setString(2, q);
+            pstmt.setString(3, q);
+            pstmt.setString(4, q);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                notes.add(new TainotePreview(
+                        rs.getString("id"),
+                        rs.getString("title"),
+                        rs.getString("author"),
+                        rs.getString("modified_at")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return notes;
+    }
 
+    public List<TainotePreview> searchByTitle(String query) {
+        if (conn == null) return new ArrayList<>();
+        String sql = "SELECT id, title, author, modified_at FROM notes WHERE title LIKE ? ORDER BY modified_at DESC";
+        return searchSingle(sql, query);
+    }
+
+    public List<TainotePreview> searchByContent(String query) {
+        if (conn == null) return new ArrayList<>();
+        String sql = "SELECT id, title, author, modified_at FROM notes WHERE content LIKE ? ORDER BY modified_at DESC";
+        return searchSingle(sql, query);
+    }
+
+    public List<TainotePreview> searchByAuthor(String query) {
+        if (conn == null) return new ArrayList<>();
+        String sql = "SELECT id, title, author, modified_at FROM notes WHERE author LIKE ? ORDER BY modified_at DESC";
+        return searchSingle(sql, query);
+    }
+
+    public List<TainotePreview> searchByTag(String query) {
+        if (conn == null) return new ArrayList<>();
+        String sql = """
+            SELECT DISTINCT n.id, n.title, n.author, n.modified_at
+            FROM notes n
+            JOIN tags t ON n.id = t.note_id
+            WHERE t.tag LIKE ?
+            ORDER BY n.modified_at DESC
+            """;
+        return searchSingle(sql, query);
+    }
+
+    private List<TainotePreview> searchSingle(String sql, String query) {
+        List<TainotePreview> notes = new ArrayList<>();
+        String q = "%" + query + "%";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, q);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                notes.add(new TainotePreview(
+                        rs.getString("id"),
+                        rs.getString("title"),
+                        rs.getString("author"),
+                        rs.getString("modified_at")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return notes;
+    }
     public boolean noteExists(String id) {
         if (conn == null) return false;
         String sql = "SELECT 1 FROM notes WHERE id = ?";
@@ -158,5 +268,86 @@ public class TainoteDB {
         }catch(SQLException e){
             e.printStackTrace();
         }
+    }
+    /* ======================================================================
+     * SIMPLE DEBUGS
+     ========================================================================*/
+    public void printNotesTable() {
+        if (conn == null || !IS_DEBUG) return;
+        String sql = "SELECT * FROM notes";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            System.out.println("\n=== NOTES ===");
+            System.out.printf("%-36s | %-20s | %-15s | %-10s | %-15s | %-15s%n",
+                    "ID", "TITLE", "AUTHOR", "STATUS", "CREATED", "MODIFIED");
+            System.out.println("-".repeat(115));
+            while (rs.next()) {
+                System.out.println(
+                        String.format("%-36s | %-20s | %-15s | %-10s | %-15s | %-15s | %s",
+                        rs.getString("id"),
+                        rs.getString("title"),
+                        rs.getString("author"),
+                        rs.getString("status"),
+                        rs.getString("created_at"),
+                        rs.getString("modified_at"),
+                        rs.getString("content"))
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void printTagsTable() {
+        if (conn == null || !IS_DEBUG) return;
+        String sql = "SELECT * FROM tags";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            System.out.println("\n=== TAGS ===");
+            System.out.printf("%-36s | %-15s%n", "NOTE_ID", "TAG");
+            System.out.println("-".repeat(55));
+            while (rs.next()) {
+                System.out.println(
+                        String.format("%-36s | %-15s%n",
+                        rs.getString("note_id"),
+                        rs.getString("tag")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void printWordsTable() {
+        if (conn == null || !IS_DEBUG) return;
+        String sql = "SELECT * FROM words";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            System.out.println("\n=== WORDS ===");
+            System.out.printf("%-36s | %-20s | %-10s%n", "NOTE_ID", "WORD", "FREQUENCY");
+            System.out.println("-".repeat(72));
+            while (rs.next()) {
+                System.out.println(
+                        String.format("%-36s | %-20s | %-10d%n",
+                        rs.getString("note_id"),
+                        rs.getString("word"),
+                        rs.getInt("frequency"))
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Set<String> getAllNoteIds() {
+        if (conn == null) return new HashSet<>();
+        String sql = "SELECT id FROM notes";
+        Set<String> ids = new HashSet<>();
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) ids.add(rs.getString("id"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ids;
     }
 }

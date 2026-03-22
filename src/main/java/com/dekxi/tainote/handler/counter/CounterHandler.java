@@ -1,7 +1,6 @@
-package com.dekxi.tainote.handler;
+package com.dekxi.tainote.handler.counter;
 
 import javafx.animation.*;
-import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.util.Duration;
 

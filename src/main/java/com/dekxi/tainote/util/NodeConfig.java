@@ -1,6 +1,6 @@
 package com.dekxi.tainote.util;
 
-final class DialogConfig {
+final class NodeConfig {
     static final String APP_TITLE = "Tainote";
     static final String WARNING_TITLE = "Tainote Warning";
     static final String CONFIRM_TITLE = "Warning";
@@ -16,7 +16,10 @@ final class DialogConfig {
     static final String IMPORT_OVERWRITE_CONTENT = "This tainote is already in your library. Do you want to update it?";
     static final String IMPORT_OVERWRITE_UPDATE_BTN = "Update";
 
+    static final String SYNC_HEADER = "Syncing your Tainotes...";
+    static final String SYNC_CONTENT = "Please wait.";
+
     static final String CANCEL_BTN = "Cancel";
 
-    private DialogConfig() {}
+    private NodeConfig() {}
 }
