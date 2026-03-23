@@ -15,7 +15,7 @@ import javafx.util.*;
 import java.util.*;
 
 public class NodeBuilder {
-    private final static Cursor[] currentCursor = { Cursor.DEFAULT };
+    public final static Cursor[] currentCursor = { Cursor.DEFAULT };
 
     private NodeBuilder(){}
     public static void makeResizable(Stage stage, Scene scene) {
@@ -85,60 +85,10 @@ public class NodeBuilder {
             }
         });
     }
-    public static HBox buildTitleBar(Stage stage) {
-        Label title = new Label("TaiNote");
-        title.setStyle("-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #E8E3F0;");
-
-        HBox left = new HBox(title);
-        left.setAlignment(Pos.CENTER_LEFT);
-        HBox.setHgrow(left, Priority.ALWAYS);
-
-        Button minimizeBtn = new Button("─");
-        Button maximizeBtn = new Button("□");
-        Button closeBtn = new Button("✕");
-
-        minimizeBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #9E99B0; -fx-cursor: hand;");
-        maximizeBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #9E99B0; -fx-cursor: hand;");
-        closeBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #9E99B0; -fx-cursor: hand;");
-
-        minimizeBtn.setOnMouseEntered(_ -> minimizeBtn.setStyle("-fx-background-color: #2E2A42; -fx-text-fill: #E8E3F0; -fx-cursor: hand;"));
-        minimizeBtn.setOnMouseExited(_ -> minimizeBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #9E99B0; -fx-cursor: hand;"));
-
-        maximizeBtn.setOnMouseEntered(_ -> maximizeBtn.setStyle("-fx-background-color: #2E2A42; -fx-text-fill: #E8E3F0; -fx-cursor: hand;"));
-        maximizeBtn.setOnMouseExited(_ -> maximizeBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #9E99B0; -fx-cursor: hand;"));
-
-        closeBtn.setOnMouseEntered(_ -> closeBtn.setStyle("-fx-background-color: #C0392B; -fx-text-fill: #FFFFFF; -fx-cursor: hand;"));
-        closeBtn.setOnMouseExited(_ -> closeBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #9E99B0; -fx-cursor: hand;"));
-
-        minimizeBtn.setOnAction(_ -> stage.setIconified(true));
-        maximizeBtn.setOnAction(_ -> stage.setMaximized(!stage.isMaximized()));
-        closeBtn.setOnAction(_ -> Event.fireEvent(stage, new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST)));
-
-        HBox controls = new HBox(minimizeBtn, maximizeBtn, closeBtn);
-        controls.setAlignment(Pos.CENTER_RIGHT);
-
-        HBox titleBar = new HBox(left, controls);
-        titleBar.setAlignment(Pos.CENTER);
-        titleBar.setStyle("-fx-background-color: #201D2E; -fx-padding: 6 8 6 12; -fx-border-color: #2E2A42; -fx-border-width: 0 0 1 0;");
-        titleBar.setPrefHeight(36);
-
-        final double[] offset = new double[2];
-        titleBar.setOnMousePressed(e -> {
-            offset[0] = e.getSceneX();
-            offset[1] = e.getSceneY();
-        });
-        titleBar.setOnMouseDragged(e -> {
-            if (currentCursor[0] != Cursor.DEFAULT) return;
-            stage.setX(e.getScreenX() - offset[0]);
-            stage.setY(e.getScreenY() - offset[1]);
-        });
-
-        return titleBar;
-    }
     public static Stage buildLoadingStage(Stage owner, String message) {
         Stage stage = new Stage();
         stage.initOwner(owner);
-        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.UNDECORATED);
 
         ImageView icon = new ImageView(new Image("/assets/tairitsu_icon.png"));
@@ -161,7 +111,7 @@ public class NodeBuilder {
 
         VBox content = new VBox(10, icon, label, dots);
         content.setAlignment(Pos.CENTER);
-        content.setStyle("-fx-padding: 24; -fx-background-color: white;");
+        content.setStyle("-fx-padding: 24; -fx-background-color: transparent;");
 
         stage.setScene(new Scene(content));
         return stage;

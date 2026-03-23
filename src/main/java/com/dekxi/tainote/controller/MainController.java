@@ -26,9 +26,6 @@ import javafx.util.*;
 import java.util.*;
 import java.util.stream.*;
 
-import static com.dekxi.tainote.util.NodeBuilder.buildTitleBar;
-import static com.dekxi.tainote.util.NodeBuilder.makeResizable;
-
 public class MainController {
     private HostServices hostServices;
 
@@ -49,6 +46,8 @@ public class MainController {
     private SearchHandler searchHandler;
     private TagHandler tagHandler;
     private AboutHandler aboutHandler;
+    private ThemeHandler themeHandler;
+    private TainoteWindowHandler tainoteWindowHandler;
 
     private CreateHandler createHandler;
     private DeleteHandler deleteHandler;
@@ -64,7 +63,14 @@ public class MainController {
     private Runnable onClose;
 
 
+
     @FXML @SuppressWarnings("unused") private VBox root;
+
+    @FXML @SuppressWarnings("unused") private HBox titleBar;
+    @FXML @SuppressWarnings("unused") private Button minimizeButton;
+    @FXML @SuppressWarnings("unused") private Button maximizeButton;
+    @FXML @SuppressWarnings("unused") private Button closeButton;
+
     // ── Editor ────────────────────────────────────────
     @FXML @SuppressWarnings("unused") private TextArea textArea;
     @FXML @SuppressWarnings("unused") private HBox editorContainer;
@@ -98,6 +104,8 @@ public class MainController {
     @FXML @SuppressWarnings("unused") private Label zoomLabel;
     @FXML @SuppressWarnings("unused") private Label wpmLabel;
     @FXML @SuppressWarnings("unused") private Label minuteLabel;
+
+    @FXML @SuppressWarnings("unused") private Menu themeMenu;
 
     // ── Menu Items ─────────────────────────────────────
     @FXML @SuppressWarnings("unused") private MenuItem newMenuItem;
@@ -145,15 +153,6 @@ public class MainController {
     public void initSyncHandler() {this.syncHandler = new SyncHandler(syncMenuItem, tainoteManager, databaseManager, listView, stage);}
     public void initAboutHandler(){this.aboutHandler = new AboutHandler(aboutMenuItem, stage);}
     public void initApp(){appState.setCurrentNoteId(UUID.randomUUID());}
-
-    public void addTitleBar(){
-        HBox titleBar = buildTitleBar(stage);
-        root.getChildren().addFirst(buildTitleBar(stage));
-        titleBar.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-                stage.setMaximized(!stage.isMaximized());
-            }
-        });
-        makeResizable(stage, scene);
-    }
+    public void initThemeHandler(){this.themeHandler = new ThemeHandler(themeMenu, scene);}
+    public void initTainoteWindow(){this.tainoteWindowHandler = new TainoteWindowHandler(stage, scene, titleBar, minimizeButton, maximizeButton, closeButton);}
 }

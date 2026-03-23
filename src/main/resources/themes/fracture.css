@@ -1,20 +1,20 @@
 /* ── Root ── */
 .root {
-    -fx-background-color: #FDF6F9;
+    -fx-background-color: #0A1410;
     -fx-font-family: "Segoe UI";
 
-    -fx-base-bg: #FDF6F9;
-    -fx-surface: #FFFFFF;
-    -fx-surface-raised: #F5E8EF;
-    -fx-border: #E8C8D8;
+    -fx-base-bg: #0A1410;
+    -fx-surface: #101E18;
+    -fx-surface-raised: #162820;
+    -fx-border: #204030;
 
-    -fx-text-primary: #2D1820;
-    -fx-text-secondary: #8A5068;
-    -fx-text-muted: #C4A0B0;
+    -fx-text-primary: #C0F0D8;
+    -fx-text-secondary: #508070;
+    -fx-text-muted: #305040;
 
-    -fx-accent: #E8769A;
-    -fx-accent-hover: #F094B2;
-    -fx-accent-pressed: #C45078;
+    -fx-accent: #20C080;
+    -fx-accent-hover: #40E0A0;
+    -fx-accent-pressed: #108050;
 }
 
 /* ── Layout ── */

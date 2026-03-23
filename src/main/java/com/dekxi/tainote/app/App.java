@@ -13,8 +13,6 @@ import javafx.stage.*;
 import java.io.*;
 import java.nio.file.*;
 
-import static com.dekxi.tainote.util.NodeBuilder.buildTitleBar;
-
 final class TainoteSceneConfig {
     public static final String CONFIG_FILE = "tainote_config.properties";
     public static final String EDITOR_FXML = "/scenes/editor.fxml";
@@ -68,8 +66,9 @@ public class App {
             controller.initSyncHandler();
             controller.initAboutHandler();
             controller.initEditorStateHandler();
+            controller.initThemeHandler();
             controller.initApp();
-            controller.addTitleBar();
+            controller.initTainoteWindow();
 
             Image image = new Image(TainoteSceneConfig.APP_ICON);
             scene.setOnKeyPressed(e -> {
