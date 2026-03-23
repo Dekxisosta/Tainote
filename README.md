@@ -8,17 +8,38 @@ A lightweight, distraction-free note-taking desktop app for writers.
 
 ## Features
 
-- **WPM Tracking** — Real-time words-per-minute counter as you type
-- **Note Syncing** — Startup reconciliation between local files and the database
-- **Author & Status Tagging** — Tag notes with an author name and writing status
-- **Font Size Control** — Adjust the editor font size via the spinner
-- **Persistent Local Database** — Notes are saved and indexed locally
-- **Distraction-Free Writing** — Clean, minimal UI that stays out of your way
+### Writing
+- **Distraction-free editor** — Clean, minimal UI that stays out of your way
+- **Font & style controls** — Font family, size, and color picker in the toolbar
+- **Author & status tagging** — Attach metadata to every note
 
-## Features in the Works
-- **Registered Tags Panel** — Organize and browse notes by tag
-- **Find & Replace** — Search and replace text within your notes
-- **Key Configuration** — Rebind shortcuts to your preference
+### Stats
+- **Document stats** — Live word count, character count, and unique word count
+- **Session stats** — WPM, session start time, elapsed time, and minutes active
+
+### Data
+- **Persistent local database** — Notes are saved and indexed via SQLite
+- **Note syncing** — Startup reconciliation between local files and the database
+- **Export & import** — Move your notes in and out of the app
+
+---
+
+## In the Works
+
+### Editor
+- **Tabbing** — Open multiple notes simultaneously
+- **Find & replace** — Search and replace within the editor
+- **Key configuration** — Rebind shortcuts to your preference
+
+### Stats & Visualizer
+- **Overall statistics** — Accumulated word count, average WPM, total time, session count, longest session
+- **Visualizer** — Daily, weekly, and monthly writing stats
+
+### Organization
+- **Registered tags** — Organize and browse notes by tag
+- **Filtering** — Filter the notes list by tag, status, or author
+
+### Theming
 - **Themes** — Light, Chaos, and Sakura themes
 
 ---

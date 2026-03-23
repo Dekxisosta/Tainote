@@ -63,6 +63,13 @@ public class ConfigManager {
     private Properties convertMapsToProps(Properties propsObj){
         textStyles.forEach((k,v) -> propsObj.setProperty("text."+k, v));
         nodeStyles.forEach((k,v) -> propsObj.setProperty("node."+k, v));
+
+        textStyles.forEach((k,v)->{
+            System.out.println(k+":"+v);
+        });
+        nodeStyles.forEach((k,v)->{
+            System.out.println(k+":"+v);
+        });
         return propsObj;
     }
     private void ensureDir(){

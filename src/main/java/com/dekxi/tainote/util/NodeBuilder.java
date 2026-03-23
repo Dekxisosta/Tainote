@@ -1,6 +1,7 @@
 package com.dekxi.tainote.util;
 
 import javafx.animation.*;
+import javafx.event.*;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
@@ -14,7 +15,126 @@ import javafx.util.*;
 import java.util.*;
 
 public class NodeBuilder {
+    private final static Cursor[] currentCursor = { Cursor.DEFAULT };
+
     private NodeBuilder(){}
+    public static void makeResizable(Stage stage, Scene scene) {
+        final double BORDER = 6;
+        final double[] dragStart = new double[2];
+        final double[] stageStart = new double[4]; // x, y, w, h
+
+        scene.setOnMouseMoved(e -> {
+            double x = e.getSceneX();
+            double y = e.getSceneY();
+            double w = stage.getWidth();
+            double h = stage.getHeight();
+
+            if (x < BORDER && y < BORDER) currentCursor[0] = Cursor.NW_RESIZE;
+            else if (x > w - BORDER && y < BORDER) currentCursor[0] = Cursor.NE_RESIZE;
+            else if (x < BORDER && y > h - BORDER) currentCursor[0] = Cursor.SW_RESIZE;
+            else if (x > w - BORDER && y > h - BORDER) currentCursor[0] = Cursor.SE_RESIZE;
+            else if (x < BORDER) currentCursor[0] = Cursor.W_RESIZE;
+            else if (x > w - BORDER) currentCursor[0] = Cursor.E_RESIZE;
+            else if (y < BORDER) currentCursor[0] = Cursor.N_RESIZE;
+            else if (y > h - BORDER) currentCursor[0] = Cursor.S_RESIZE;
+            else currentCursor[0] = Cursor.DEFAULT;
+
+            scene.setCursor(currentCursor[0]);
+        });
+
+        scene.setOnMousePressed(e -> {
+            dragStart[0] = e.getScreenX();
+            dragStart[1] = e.getScreenY();
+            stageStart[0] = stage.getX();
+            stageStart[1] = stage.getY();
+            stageStart[2] = stage.getWidth();
+            stageStart[3] = stage.getHeight();
+        });
+
+        scene.setOnMouseDragged(e -> {
+            double dx = e.getScreenX() - dragStart[0];
+            double dy = e.getScreenY() - dragStart[1];
+            Cursor cursor = scene.getCursor();
+
+            if (cursor == Cursor.SE_RESIZE) {
+                stage.setWidth(Math.max(stage.getMinWidth(), stageStart[2] + dx));
+                stage.setHeight(Math.max(stage.getMinHeight(), stageStart[3] + dy));
+            } else if (cursor == Cursor.SW_RESIZE) {
+                stage.setWidth(Math.max(stage.getMinWidth(), stageStart[2] - dx));
+                stage.setX(stageStart[0] + stageStart[2] - stage.getWidth());
+                stage.setHeight(Math.max(stage.getMinHeight(), stageStart[3] + dy));
+            } else if (cursor == Cursor.NE_RESIZE) {
+                stage.setWidth(Math.max(stage.getMinWidth(), stageStart[2] + dx));
+                stage.setHeight(Math.max(stage.getMinHeight(), stageStart[3] - dy));
+                stage.setY(stageStart[1] + stageStart[3] - stage.getHeight());
+            } else if (cursor == Cursor.NW_RESIZE) {
+                stage.setWidth(Math.max(stage.getMinWidth(), stageStart[2] - dx));
+                stage.setX(stageStart[0] + stageStart[2] - stage.getWidth());
+                stage.setHeight(Math.max(stage.getMinHeight(), stageStart[3] - dy));
+                stage.setY(stageStart[1] + stageStart[3] - stage.getHeight());
+            } else if (cursor == Cursor.E_RESIZE) {
+                stage.setWidth(Math.max(stage.getMinWidth(), stageStart[2] + dx));
+            } else if (cursor == Cursor.W_RESIZE) {
+                stage.setWidth(Math.max(stage.getMinWidth(), stageStart[2] - dx));
+                stage.setX(stageStart[0] + stageStart[2] - stage.getWidth());
+            } else if (cursor == Cursor.S_RESIZE) {
+                stage.setHeight(Math.max(stage.getMinHeight(), stageStart[3] + dy));
+            } else if (cursor == Cursor.N_RESIZE) {
+                stage.setHeight(Math.max(stage.getMinHeight(), stageStart[3] - dy));
+                stage.setY(stageStart[1] + stageStart[3] - stage.getHeight());
+            }
+        });
+    }
+    public static HBox buildTitleBar(Stage stage) {
+        Label title = new Label("TaiNote");
+        title.setStyle("-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #E8E3F0;");
+
+        HBox left = new HBox(title);
+        left.setAlignment(Pos.CENTER_LEFT);
+        HBox.setHgrow(left, Priority.ALWAYS);
+
+        Button minimizeBtn = new Button("─");
+        Button maximizeBtn = new Button("□");
+        Button closeBtn = new Button("✕");
+
+        minimizeBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #9E99B0; -fx-cursor: hand;");
+        maximizeBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #9E99B0; -fx-cursor: hand;");
+        closeBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #9E99B0; -fx-cursor: hand;");
+
+        minimizeBtn.setOnMouseEntered(_ -> minimizeBtn.setStyle("-fx-background-color: #2E2A42; -fx-text-fill: #E8E3F0; -fx-cursor: hand;"));
+        minimizeBtn.setOnMouseExited(_ -> minimizeBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #9E99B0; -fx-cursor: hand;"));
+
+        maximizeBtn.setOnMouseEntered(_ -> maximizeBtn.setStyle("-fx-background-color: #2E2A42; -fx-text-fill: #E8E3F0; -fx-cursor: hand;"));
+        maximizeBtn.setOnMouseExited(_ -> maximizeBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #9E99B0; -fx-cursor: hand;"));
+
+        closeBtn.setOnMouseEntered(_ -> closeBtn.setStyle("-fx-background-color: #C0392B; -fx-text-fill: #FFFFFF; -fx-cursor: hand;"));
+        closeBtn.setOnMouseExited(_ -> closeBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #9E99B0; -fx-cursor: hand;"));
+
+        minimizeBtn.setOnAction(_ -> stage.setIconified(true));
+        maximizeBtn.setOnAction(_ -> stage.setMaximized(!stage.isMaximized()));
+        closeBtn.setOnAction(_ -> Event.fireEvent(stage, new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST)));
+
+        HBox controls = new HBox(minimizeBtn, maximizeBtn, closeBtn);
+        controls.setAlignment(Pos.CENTER_RIGHT);
+
+        HBox titleBar = new HBox(left, controls);
+        titleBar.setAlignment(Pos.CENTER);
+        titleBar.setStyle("-fx-background-color: #201D2E; -fx-padding: 6 8 6 12; -fx-border-color: #2E2A42; -fx-border-width: 0 0 1 0;");
+        titleBar.setPrefHeight(36);
+
+        final double[] offset = new double[2];
+        titleBar.setOnMousePressed(e -> {
+            offset[0] = e.getSceneX();
+            offset[1] = e.getSceneY();
+        });
+        titleBar.setOnMouseDragged(e -> {
+            if (currentCursor[0] != Cursor.DEFAULT) return;
+            stage.setX(e.getScreenX() - offset[0]);
+            stage.setY(e.getScreenY() - offset[1]);
+        });
+
+        return titleBar;
+    }
     public static Stage buildLoadingStage(Stage owner, String message) {
         Stage stage = new Stage();
         stage.initOwner(owner);

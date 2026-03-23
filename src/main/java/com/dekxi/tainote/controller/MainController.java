@@ -15,6 +15,7 @@ import javafx.application.*;
 import javafx.concurrent.*;
 import javafx.fxml.*;
 
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.*;
@@ -24,6 +25,9 @@ import javafx.util.*;
 
 import java.util.*;
 import java.util.stream.*;
+
+import static com.dekxi.tainote.util.NodeBuilder.buildTitleBar;
+import static com.dekxi.tainote.util.NodeBuilder.makeResizable;
 
 public class MainController {
     private HostServices hostServices;
@@ -55,11 +59,12 @@ public class MainController {
 
     private EditorStateHandler editorStateHandler;
 
+    private Scene scene;
     private Stage stage;
-    private List<String> currentTags = new ArrayList<>();
     private Runnable onClose;
 
 
+    @FXML @SuppressWarnings("unused") private VBox root;
     // ── Editor ────────────────────────────────────────
     @FXML @SuppressWarnings("unused") private TextArea textArea;
     @FXML @SuppressWarnings("unused") private HBox editorContainer;
@@ -78,6 +83,7 @@ public class MainController {
 
     // ── Sidebar ────────────────────────────────────────
     @FXML @SuppressWarnings("unused") private ListView<TainotePreview> listView;
+    @FXML @SuppressWarnings("unused") private ListView<String> wordFrequencyListView;
     @FXML @SuppressWarnings("unused") private TextField searchField;
     @FXML @SuppressWarnings("unused") private ComboBox<String> filterComboBox;
     @FXML @SuppressWarnings("unused") private ImageView taiDancingImageView;
@@ -91,6 +97,7 @@ public class MainController {
     @FXML @SuppressWarnings("unused") private Label timeElapsedLabel;
     @FXML @SuppressWarnings("unused") private Label zoomLabel;
     @FXML @SuppressWarnings("unused") private Label wpmLabel;
+    @FXML @SuppressWarnings("unused") private Label minuteLabel;
 
     // ── Menu Items ─────────────────────────────────────
     @FXML @SuppressWarnings("unused") private MenuItem newMenuItem;
@@ -112,6 +119,7 @@ public class MainController {
     public void setOnClose(Runnable onClose){
         this.onClose = onClose;
     }
+    public void setScene(Scene scene){this.scene = scene;}
     public void setStage(Stage stage){
         this.stage = stage;
     }
@@ -122,7 +130,7 @@ public class MainController {
 
     public void initAppState(){this.appState = new AppState();}
     public void initStyleParser(){this.styleHandler = new StyleHandler(config, textArea, fontComboBox, fontSizeSpinner, colorPicker);}
-    public void initCounterHandler(){this.counterHandler = new CounterHandler(textArea, charCountLabel, wordCountLabel, uniqueWordCountLabel, timeStartedLabel, timeElapsedLabel, zoomLabel, wpmLabel);}
+    public void initCounterHandler(){this.counterHandler = new CounterHandler(textArea, charCountLabel, wordCountLabel, uniqueWordCountLabel, timeStartedLabel, timeElapsedLabel, zoomLabel, wpmLabel, minuteLabel);}
     public void initListHandler(){this.listHandler = new ListHandler(appState, databaseManager, tainoteManager, textArea, titleField, authorNameField, statusField, listView);}
     public void initDanceHandler(){this.danceHandler = new DanceHandler(taiDancingImageView, textArea);}
     public void initWPMHandler(){this.wpmHandler = new WPMHandler(appState, wpmLabel, textArea);}
@@ -137,4 +145,15 @@ public class MainController {
     public void initSyncHandler() {this.syncHandler = new SyncHandler(syncMenuItem, tainoteManager, databaseManager, listView, stage);}
     public void initAboutHandler(){this.aboutHandler = new AboutHandler(aboutMenuItem, stage);}
     public void initApp(){appState.setCurrentNoteId(UUID.randomUUID());}
+
+    public void addTitleBar(){
+        HBox titleBar = buildTitleBar(stage);
+        root.getChildren().addFirst(buildTitleBar(stage));
+        titleBar.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                stage.setMaximized(!stage.isMaximized());
+            }
+        });
+        makeResizable(stage, scene);
+    }
 }

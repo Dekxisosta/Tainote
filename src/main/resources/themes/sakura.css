@@ -1,0 +1,311 @@
+/* ── Root ── */
+.root {
+    -fx-background-color: #1A1014;
+    -fx-font-family: "Segoe UI";
+}
+
+/* ── Layout ── */
+.hbox, .vbox {
+    -fx-background-color: transparent;
+}
+
+/* ── Labels ── */
+.label {
+    -fx-text-fill: #F2C4CE;
+}
+
+.label-secondary {
+    -fx-text-fill: #FFFFFF;
+}
+
+.label-muted {
+    -fx-text-fill: #8C6670;
+}
+
+/* ── Split Pane ── */
+.split-pane {
+    -fx-background-color: #1A1014;
+    -fx-padding: 0;
+}
+
+.split-pane-divider {
+    -fx-background-color: #E8829A;
+    -fx-padding: 0 1 0 1;
+}
+
+/* ── Menu Bar ── */
+.menu-bar {
+    -fx-background-color: #241318;
+}
+
+.menu {
+    -fx-text-fill: #F2C4CE;
+}
+
+.menu:hover, .menu:showing {
+    -fx-background-color: #2E1A20;
+}
+
+.menu-item {
+    -fx-background-color: #241318;
+}
+
+.menu-item .label {
+    -fx-text-fill: #F2C4CE;
+}
+
+.menu-item:hover, .menu-item:focused {
+    -fx-background-color: #2E1A20;
+}
+
+.context-menu {
+    -fx-background-color: #241318;
+    -fx-border-color: #E8829A;
+    -fx-border-width: 1;
+}
+
+/* ── Text Area ── */
+.text-area {
+    -fx-control-inner-background: transparent;
+    -fx-background-color: rgba(36, 19, 24, 0.2);
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
+
+.text-area .content {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ── Text Field ── */
+.text-field {
+    -fx-background-color: #241318;
+    -fx-text-fill: #FFFFFF;
+    -fx-prompt-text-fill: #8C6670;
+    -fx-border-color: #E8829A;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.text-field:focused {
+    -fx-border-color: #F2A0B5;
+}
+
+/* ── Buttons ── */
+.button {
+    -fx-background-color: #2E1A20;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #E8829A;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #3D2029;
+}
+
+.button:pressed {
+    -fx-background-color: #E8829A;
+}
+
+.button-accent {
+    -fx-background-color: #E8829A;
+    -fx-text-fill: #1A1014;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+}
+
+.button-accent:hover {
+    -fx-background-color: #F2A0B5;
+}
+
+/* ── List View ── */
+.list-view {
+    -fx-background-color: #241318;
+    -fx-border-color: #E8829A;
+    -fx-border-width: 1;
+}
+
+.list-cell {
+    -fx-background-color: #241318;
+    -fx-text-fill: #FFFFFF;
+}
+
+.list-cell:hover {
+    -fx-background-color: #2E1A20;
+}
+
+.list-cell:selected {
+    -fx-background-color: #3D2029;
+    -fx-text-fill: #F2C4CE;
+}
+
+/* ── Scroll Bar ── */
+.scroll-bar {
+    -fx-background-color: #241318;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #E8829A;
+    -fx-background-radius: 4;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #F2A0B5;
+}
+
+.scroll-bar .track {
+    -fx-background-color: #2E1A20;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: #241318;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-background-color: #8C6670;
+}
+
+/* ── Separator ── */
+.separator .line {
+    -fx-border-color: #E8829A;
+    -fx-border-width: 1;
+}
+
+/* ── Combo Box ── */
+.combo-box {
+    -fx-background-color: #241318;
+    -fx-border-color: #E8829A;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #241318;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #2E1A20;
+    -fx-border-color: #E8829A;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #3D2029;
+}
+
+/* ── Spinner ── */
+.spinner {
+    -fx-background-color: #241318;
+    -fx-border-color: #E8829A;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.spinner .text-field {
+    -fx-background-color: #241318;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-width: 0;
+}
+
+.spinner .increment-arrow-button,
+.spinner .decrement-arrow-button {
+    -fx-background-color: #2E1A20;
+}
+
+.spinner .increment-arrow-button:hover,
+.spinner .decrement-arrow-button:hover {
+    -fx-background-color: #3D2029;
+}
+
+.spinner .increment-arrow,
+.spinner .decrement-arrow {
+    -fx-background-color: #F2C4CE;
+}
+
+/* ── Check Box ── */
+.check-box .box {
+    -fx-background-color: #241318;
+    -fx-border-color: #E8829A;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #E8829A;
+    -fx-border-color: #E8829A;
+}
+
+.check-box .mark {
+    -fx-background-color: #1A1014;
+}
+
+/* ── Tab Pane ── */
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #241318;
+}
+
+.tab {
+    -fx-background-color: #241318;
+}
+
+.tab .tab-label {
+    -fx-text-fill: #8C6670;
+}
+
+.tab:selected {
+    -fx-background-color: #2E1A20;
+}
+
+.tab:selected .tab-label {
+    -fx-text-fill: #F2C4CE;
+}
+
+/* ── Tool Bar ── */
+.tool-bar {
+    -fx-background-color: #241318;
+    -fx-border-color: #E8829A;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* ── Status Bar ── */
+.status-bar {
+    -fx-background-color: #241318;
+    -fx-border-color: #E8829A;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 4 8 4 8;
+}
+
+.status-bar .label {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 11px;
+}
+
+/* ── Panels ── */
+.panel {
+    -fx-background-color: #241318;
+    -fx-border-color: #E8829A;
+    -fx-border-width: 1;
+}
+
+.panel-header {
+    -fx-background-color: #1A1014;
+    -fx-border-color: #E8829A;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 6 10 6 10;
+}

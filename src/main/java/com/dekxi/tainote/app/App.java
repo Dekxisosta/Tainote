@@ -13,6 +13,8 @@ import javafx.stage.*;
 import java.io.*;
 import java.nio.file.*;
 
+import static com.dekxi.tainote.util.NodeBuilder.buildTitleBar;
+
 final class TainoteSceneConfig {
     public static final String CONFIG_FILE = "tainote_config.properties";
     public static final String EDITOR_FXML = "/scenes/editor.fxml";
@@ -49,6 +51,7 @@ public class App {
             controller.setOnClose(config::saveUserProperties);
             controller.setHostServices(hostServices);
 
+            controller.setScene(scene);
             controller.initAppState();
             controller.initStyleParser();
             controller.initCounterHandler();
@@ -66,6 +69,7 @@ public class App {
             controller.initAboutHandler();
             controller.initEditorStateHandler();
             controller.initApp();
+            controller.addTitleBar();
 
             Image image = new Image(TainoteSceneConfig.APP_ICON);
             scene.setOnKeyPressed(e -> {
@@ -84,9 +88,12 @@ public class App {
             stage.getIcons().add(image);
             stage.fullScreenExitHintProperty().setValue("");
             stage.setOnCloseRequest((_)->controller.onClose());
+            stage.initStyle(StageStyle.UNDECORATED);
             stage.show();
             stage.setMinHeight(875);
             stage.setMinWidth(800);
+
+
 
         }catch(IOException e){
             System.out.println("[ERROR] : " + e.getClass().getSimpleName());

@@ -20,266 +20,464 @@
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <!--<?import javafx.scene.control.ScrollPane?>-->
 <!--<?import org.fxmisc.richtext.InlineCssTextArea?>-->
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="820.0" prefWidth="1216.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dekxi.tainote.controller.MainController">
+<VBox fx:id="root" prefHeight="800.0" prefWidth="1261.0" stylesheets="@../themes/chaos.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dekxi.tainote.controller.MainController">
    <children>
-      <VBox minHeight="-Infinity" prefHeight="800.0" prefWidth="100.0">
+      <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="75.0" prefWidth="200.0" style="-fx-background-color: #1A1726;" stylesheets="@../themes/chaos.css">
          <children>
-            <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="75.0" prefWidth="200.0">
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/tairitsu_icon.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="20.0" top="10.0" />
+               </HBox.margin>
+            </ImageView>
+            <VBox prefHeight="200.0" prefWidth="100.0" stylesheets="@../themes/chaos.css">
+               <children>
+                  <HBox minWidth="400.0" prefHeight="100.0" prefWidth="400.0" stylesheets="@../themes/chaos.css">
+                     <children>
+                        <TextField fx:id="titleField" alignment="BASELINE_LEFT" prefHeight="25.0" prefWidth="375.0" promptText="Enter title..." stylesheets="@../themes/chaos.css" HBox.hgrow="ALWAYS" />
+                     </children>
+                     <padding>
+                        <Insets left="30.0" right="30.0" top="10.0" />
+                     </padding>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" stylesheets="@../themes/chaos.css">
+                     <children>
+                        <MenuBar nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: rgba(0,0,0,0 );" stylesheets="@../themes/chaos.css" HBox.hgrow="ALWAYS">
+                           <menus>
+                              <Menu mnemonicParsing="false" style="-fx-text-fill: #E8E3F0;" text="File">
+                                 <items>
+                                    <MenuItem fx:id="newMenuItem" mnemonicParsing="false" text="New" />
+                                    <MenuItem fx:id="importMenuItem" mnemonicParsing="false" text="Import" />
+                                    <MenuItem fx:id="exportMenuItem" mnemonicParsing="false" text="Export" />
+                                    <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" text="Save" />
+                                    <SeparatorMenuItem mnemonicParsing="false" />
+                                    <MenuItem fx:id="syncMenuItem" mnemonicParsing="false" text="Sync" />
+                                 </items>
+                              </Menu>
+                              <Menu mnemonicParsing="false" style="-fx-text-fill: #E8E3F0;" text="Edit">
+                                 <items>
+                                    <MenuItem fx:id="selectAllMenuItem" mnemonicParsing="false" text="Select All" />
+                                    <MenuItem fx:id="findReplaceMenuItem" mnemonicParsing="false" text="Find / Replace" />
+                                    <MenuItem fx:id="deleteMenuItem" mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </Menu>
+                              <Menu mnemonicParsing="false" style="-fx-text-fill: #E8E3F0;" text="Themes">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Light Theme" />
+                                    <MenuItem mnemonicParsing="false" text="Chaos Theme" />
+                                    <MenuItem mnemonicParsing="false" text="Sakura Theme" />
+                                 </items>
+                              </Menu>
+                              <Menu mnemonicParsing="false" style="-fx-text-fill: #E8E3F0;" text="Help">
+                                 <items>
+                                    <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="About Tainote" />
+                                    <MenuItem fx:id="redirectMenuItem" mnemonicParsing="false" text="Github" />
+                                    <MenuItem fx:id="keyConfigMenuItem" mnemonicParsing="false" text="Key Configuration" />
+                                    <MenuItem fx:id="donateMenuItem" mnemonicParsing="false" text="Donate" />
+                                 </items>
+                              </Menu>
+                           </menus>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <HBox.margin>
+                              <Insets left="30.0" right="30.0" />
+                           </HBox.margin>
+                        </MenuBar>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="81.0" prefWidth="526.0" stylesheets="@../themes/chaos.css" HBox.hgrow="ALWAYS" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" stylesheets="@../themes/chaos.css">
                <children>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../assets/tairitsu_icon.png" />
+                        <Image url="@../assets/avatar.jpg" />
                      </image>
                      <HBox.margin>
-                        <Insets left="20.0" top="10.0" />
+                        <Insets right="20.0" />
                      </HBox.margin>
                   </ImageView>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox alignment="CENTER" minWidth="-Infinity" prefHeight="55.0" prefWidth="120.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox minWidth="400.0" prefHeight="100.0" prefWidth="400.0">
-                           <children>
-                              <TextField fx:id="titleField" alignment="BASELINE_LEFT" prefHeight="25.0" prefWidth="375.0" promptText="Enter title..." HBox.hgrow="ALWAYS" />
-                           </children>
-                           <padding>
-                              <Insets left="30.0" right="30.0" top="10.0" />
-                           </padding>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <MenuBar nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: rgba(0,0,0,0 );" HBox.hgrow="ALWAYS">
-                                <menus>
-                                  <Menu mnemonicParsing="false" style="-fx-text-fill: white; -fx-font-family: &quot;Consolas&quot;;" text="File">
-                                    <items>
-                                      <MenuItem fx:id="newMenuItem" mnemonicParsing="false" text="New" />
-                                          <MenuItem fx:id="importMenuItem" mnemonicParsing="false" text="Import" />
-                                          <MenuItem fx:id="exportMenuItem" mnemonicParsing="false" text="Export" />
-                                          <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" text="Save" />
-                                          <SeparatorMenuItem mnemonicParsing="false" />
-                                          <MenuItem fx:id="syncMenuItem" mnemonicParsing="false" text="Sync" />
-                                    </items>
-                                  </Menu>
-                                  <Menu mnemonicParsing="false" style="-fx-font-family: 'Consolas';" text="Edit">
-                                    <items>
-                                          <MenuItem fx:id="selectAllMenuItem" mnemonicParsing="false" text="Select All" />
-                                          <MenuItem fx:id="findReplaceMenuItem" mnemonicParsing="false" text="Find / Replace" />
-                                          <MenuItem fx:id="deleteMenuItem" mnemonicParsing="false" text="Delete" />
-                                    </items>
-                                  </Menu>
-                                    <Menu mnemonicParsing="false" style="-fx-text-fill: white; -fx-font-family: &quot;Consolas&quot;;" text="Themes">
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Light Theme" />
-                                          <MenuItem mnemonicParsing="false" text="Chaos Theme" />
-                                          <MenuItem mnemonicParsing="false" text="Sakura Theme" />
-                                       </items>
-                                    </Menu>
-                                  <Menu mnemonicParsing="false" style="-fx-font-family: 'Consolas';" text="Help">
-                                    <items>
-                                          <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="About Tainote" />
-                                      <MenuItem fx:id="redirectMenuItem" mnemonicParsing="false" text="Github" />
-                                          <MenuItem fx:id="keyConfigMenuItem" mnemonicParsing="false" text="Key Configuration" />
-                                          <MenuItem fx:id="donateMenuItem" mnemonicParsing="false" text="Donate" />
-                                    </items>
-                                  </Menu>
-                                </menus>
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                                 <HBox.margin>
-                                    <Insets left="30.0" right="30.0" />
-                                 </HBox.margin>
-                              </MenuBar>
-                           </children>
+                        <TextField fx:id="authorNameField" promptText="Author Name">
                            <VBox.margin>
-                              <Insets top="10.0" />
+                              <Insets bottom="5.0" />
                            </VBox.margin>
-                        </HBox>
+                        </TextField>
+                        <TextField fx:id="statusField" promptText="Status" />
                      </children>
                   </VBox>
-                  <VBox prefHeight="81.0" prefWidth="526.0" HBox.hgrow="ALWAYS" />
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../assets/avatar.jpg" />
-                           </image>
-                           <HBox.margin>
-                              <Insets right="20.0" />
-                           </HBox.margin>
-                        </ImageView>
-                        <VBox alignment="CENTER" minWidth="-Infinity" prefHeight="55.0" prefWidth="120.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <TextField fx:id="authorNameField" promptText="Author Name">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </TextField>
-                              <TextField fx:id="statusField" promptText="Status" />
-                           </children>
-                        </VBox>
-                     </children>
-                     <HBox.margin>
-                        <Insets bottom="10.0" right="20.0" top="10.0" />
-                     </HBox.margin>
-                  </HBox>
                </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
+               <HBox.margin>
+                  <Insets bottom="10.0" right="20.0" top="10.0" />
+               </HBox.margin>
             </HBox>
-            <VBox prefHeight="1200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <SplitPane dividerPositions="0.75" prefHeight="700.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                    <items>
-                        <VBox prefHeight="776.0" prefWidth="781.0">
-                           <children>
-                              <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #191a1f;">
-                                <items>
-                                    <Button maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" />
-                                    <Button maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" />
-                                    <ComboBox fx:id="fontComboBox" minHeight="25.0" prefWidth="150.0" promptText="Choose Font..." style="-fx-background-color: white; -fx-font-size: 12; -fx-font-family: &quot;Consolas&quot;;">
-                                       <tooltip>
-                                          <Tooltip text="Empty Tooltip" />
-                                       </tooltip></ComboBox>
-                                    <Spinner fx:id="fontSizeSpinner" editable="true" prefWidth="75.0" />
-                                    <ColorPicker fx:id="colorPicker" minHeight="25.0" style="-fx-font-family: 'Consolas'; -fx-background-color: white; -fx-font-size: 12;">
-                                       <effect>
-                                          <Glow level="0.0" />
-                                       </effect></ColorPicker>
-                                </items>
-                              </ToolBar>
-                              <HBox fx:id="editorContainer" maxWidth="1.7976931348623157E308" prefHeight="350.0" prefWidth="987.0" VBox.vgrow="ALWAYS">
-                                 <children>
-                                    <TextArea fx:id="textArea" prefHeight="421.0" prefWidth="987.0" promptText="Type and let your creativity shine through!..." HBox.hgrow="ALWAYS" />
-                                 </children>
-                              </HBox>
-                              <Separator prefWidth="200.0" />
-                              <Separator prefWidth="1008.0" />
-                              <ToolBar prefHeight="0.0" prefWidth="987.0" style="-fx-background-color: #191a1f;">
-                                 <items>
-                                    <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="17.0" prefWidth="64.0" style="-fx-text-fill: white;">
-                                       <children>
-                                          <Label text="Char: " textFill="WHITE" HBox.hgrow="ALWAYS" />
-                                          <Label fx:id="charCountLabel" text="null" textFill="WHITE" HBox.hgrow="ALWAYS" />
-                                       </children>
-                                    </HBox>
-                                    <Label text="|" textFill="WHITE" />
-                                    <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="17.0" prefWidth="63.0">
-                                       <children>
-                                          <Label text="Word: " textFill="WHITE" HBox.hgrow="ALWAYS" />
-                                          <Label fx:id="wordCountLabel" text="null" textFill="WHITE" HBox.hgrow="ALWAYS" />
-                                       </children>
-                                    </HBox>
-                                    <Label text="|" textFill="WHITE" />
-                                    <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="10.0" prefWidth="100.0">
-                                       <children>
-                                          <Label text="Unique Count: " textFill="WHITE" HBox.hgrow="ALWAYS" />
-                                          <Label fx:id="uniqueWordCountLabel" text="null" textFill="WHITE" HBox.hgrow="ALWAYS" />
-                                       </children>
-                                    </HBox>
-                                    <Label text="|" textFill="WHITE" />
-                                    <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="17.0" prefWidth="149.0">
-                                       <children>
-                                          <Label text="Session Elapsed: " textFill="WHITE" HBox.hgrow="ALWAYS" />
-                                          <Label fx:id="timeElapsedLabel" text="null" textFill="WHITE" HBox.hgrow="ALWAYS" />
-                                       </children>
-                                    </HBox>
-                                    <Label text="|" textFill="WHITE" />
-                                    <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="10.0" prefWidth="150.0">
-                                       <children>
-                                          <Label text="Session Started: " textFill="WHITE" HBox.hgrow="ALWAYS" />
-                                          <Label fx:id="timeStartedLabel" text="null" textFill="WHITE" HBox.hgrow="ALWAYS" />
-                                       </children>
-                                    </HBox>
-                                    <Label text="|" textFill="WHITE" />
-                                    <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="17.0" prefWidth="66.0">
-                                       <children>
-                                          <Label text="WPM: " textFill="WHITE" HBox.hgrow="ALWAYS" />
-                                          <Label fx:id="wpmLabel" text="null" textFill="WHITE" HBox.hgrow="ALWAYS" />
-                                       </children>
-                                    </HBox>
-                                 </items>
-                              </ToolBar>
-                           </children>
-                        </VBox>
-                        <SplitPane dividerPositions="0.2" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="516.0">
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </HBox>
+      <VBox prefHeight="1200.0" prefWidth="100.0" stylesheets="@../themes/chaos.css" VBox.vgrow="ALWAYS">
+         <children>
+            <SplitPane dividerPositions="0.6570723684210527" prefHeight="700.0" prefWidth="200.0" style="-fx-background-color: #0F0D17;" styleClass=".split-pane-divider" stylesheets="@../themes/chaos.css" VBox.vgrow="ALWAYS">
+               <items>
+                  <VBox prefHeight="776.0" prefWidth="781.0" stylesheets="@../themes/chaos.css">
+                     <children>
+                        <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #191a1f;" stylesheets="@../themes/chaos.css">
                            <items>
-                              <VBox alignment="CENTER" maxWidth="-Infinity" prefHeight="726.0" prefWidth="200.0">
+                              <Button maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" />
+                              <Button maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" />
+                              <ComboBox fx:id="fontComboBox" minHeight="25.0" prefWidth="150.0" promptText="Choose Font..." style="-fx-background-color: white; -fx-font-size: 12; -fx-font-family: &quot;Consolas&quot;;">
+                                 <tooltip>
+                                    <Tooltip text="Empty Tooltip" />
+                                 </tooltip>
+                              </ComboBox>
+                              <Spinner fx:id="fontSizeSpinner" editable="true" prefWidth="75.0" />
+                              <ColorPicker fx:id="colorPicker" minHeight="25.0" stylesheets="@../themes/chaos.css">
+                                 <effect>
+                                    <Glow level="0.0" />
+                                 </effect>
+                              </ColorPicker>
+                           </items>
+                        </ToolBar>
+                        <HBox fx:id="editorContainer" maxWidth="1.7976931348623157E308" prefHeight="350.0" prefWidth="987.0" stylesheets="@../themes/chaos.css" VBox.vgrow="ALWAYS">
+                           <children>
+                              <TextArea fx:id="textArea" prefHeight="421.0" prefWidth="987.0" promptText="Type and let your creativity shine through!..." stylesheets="@../themes/chaos.css" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" stylesheets="@../themes/chaos.css" />
+                        <Separator prefWidth="1008.0" stylesheets="@../themes/chaos.css" />
+                        <ToolBar prefHeight="0.0" prefWidth="987.0" style="-fx-background-color: #191a1f;" stylesheets="@../themes/chaos.css" />
+                     </children>
+                  </VBox>
+                  <SplitPane dividerPositions="0.2" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="516.0" stylesheets="@../themes/chaos.css">
+                     <items>
+                        <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="225.0" stylesheets="@../themes/chaos.css">
+                           <children>
+                              <ImageView fx:id="taiDancingImageView" fitHeight="145.0" fitWidth="228.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/tai_dancing-0.png" />
+                                 </image>
+                              </ImageView>
+                              <Separator prefWidth="200.0" stylesheets="@../themes/chaos.css" />
+                              <Label maxWidth="1.7976931348623157E308" prefWidth="221.0" style="-fx-font-family: &quot;Consolas&quot;;" stylesheets="@../themes/chaos.css" text="Registered Tags">
+                                 <padding>
+                                    <Insets bottom="2.5" left="10.0" right="10.0" top="2.5" />
+                                 </padding>
+                              </Label>
+                              <Separator prefWidth="200.0" stylesheets="@../themes/chaos.css" />
+                              <TextField fx:id="tagTextField" promptText="Enter tag name..." stylesheets="@../themes/chaos.css" />
+                              <Separator prefWidth="200.0" stylesheets="@../themes/chaos.css" />
+                              <FlowPane fx:id="tagChipPane" prefHeight="191.0" prefWidth="193.0" style="-fx-padding: 10; -fx-background-color: #1A1726;" stylesheets="@../themes/chaos.css" VBox.vgrow="ALWAYS" />
+                              <VBox prefHeight="375.0" prefWidth="193.0" stylesheets="@../themes/chaos.css" VBox.vgrow="NEVER">
                                  <children>
-                                    <ImageView fx:id="taiDancingImageView" fitHeight="181.0" fitWidth="193.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../assets/tai_dancing-0.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label maxWidth="1.7976931348623157E308" prefWidth="221.0" style="-fx-font-family: &quot;Consolas&quot;;" text="Registered Tags">
+                                    <Separator prefWidth="200.0" stylesheets="@../themes/chaos.css" />
+                                    <Label maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="225.0" style="-fx-font-family: &quot;Consolas&quot;; -fx-background-color: #0F0D17;" stylesheets="@../themes/chaos.css" text="Document Statistics" textFill="#e8e3f0">
+                                       <padding>
+                                          <Insets bottom="2.5" left="10.0" right="10.0" top="2.5" />
+                                       </padding>
+                                       <font>
+                                          <Font name="Consolas Italic" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Separator prefWidth="200.0" stylesheets="@../themes/chaos.css" />
+                                    <GridPane alignment="TOP_CENTER" prefHeight="151.0" prefWidth="221.0" style="-fx-background-color: #1A1726;" stylesheets="@../themes/chaos.css" vgap="2.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="129.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="10.0" prefWidth="76.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints />
+                                          <RowConstraints maxHeight="19.0" minHeight="0.0" prefHeight="0.0" />
+                                          <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="19.0" />
+                                          <RowConstraints maxHeight="20.0" minHeight="20.0" />
+                                          <RowConstraints />
+                                          <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label stylesheets="@../themes/chaos.css" text="Unique Count: " textFill="#e8e3f0" GridPane.rowIndex="5">
+                                             <font>
+                                                <Font name="Consolas Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="uniqueWordCountLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER" stylesheets="@../themes/chaos.css" text="null" textFill="#996ae4" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                             <font>
+                                                <Font name="FutehodoMaruGothic" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label stylesheets="@../themes/chaos.css" text="Word Count: " textFill="#e8e3f0" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font name="Consolas Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="wordCountLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER" stylesheets="@../themes/chaos.css" text="null" textFill="#996ae4" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font name="FutehodoMaruGothic" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label stylesheets="@../themes/chaos.css" text="Character Count: " textFill="#e8e3f0" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font name="Consolas Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="charCountLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER" stylesheets="@../themes/chaos.css" text="null" textFill="#ffd35a" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font name="FutehodoMaruGothic" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" right="10.0" />
+                                       </padding>
+                                    </GridPane>
+                                    <Separator prefWidth="200.0" stylesheets="@../themes/chaos.css" />
+                                    <Label maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="225.0" style="-fx-font-family: &quot;Consolas&quot;; -fx-background-color: #0F0D17;" stylesheets="@../themes/chaos.css" text="Session Statistics" textFill="#e8e3f0">
                                        <padding>
                                           <Insets bottom="2.5" left="10.0" right="10.0" top="2.5" />
                                        </padding>
                                     </Label>
-                                    <TextField fx:id="tagTextField" promptText="Enter tag name..." />
-                                    <FlowPane fx:id="tagChipPane" prefHeight="200.0" prefWidth="200.0" style="-fx-padding: 10;" VBox.vgrow="ALWAYS" />
+                                    <Separator prefWidth="200.0" stylesheets="@../themes/chaos.css" />
+                                    <GridPane alignment="TOP_CENTER" prefHeight="151.0" prefWidth="221.0" style="-fx-background-color: #1A1726;" stylesheets="@../themes/chaos.css" vgap="2.0" VBox.vgrow="NEVER">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="129.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="10.0" prefWidth="76.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints />
+                                          <RowConstraints maxHeight="19.0" minHeight="0.0" prefHeight="0.0" />
+                                          <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="44.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label stylesheets="@../themes/chaos.css" text="WPM (char/sec/5): " textFill="#e8e3f0" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font name="Consolas Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="wpmLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER" stylesheets="@../themes/chaos.css" text="null" textFill="#ffd35a" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font name="FutehodoMaruGothic" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label stylesheets="@../themes/chaos.css" text="Session Started: " textFill="#e8e3f0" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font name="Consolas Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="timeStartedLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER" stylesheets="@../themes/chaos.css" text="null" textFill="#996ae4" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font name="FutehodoMaruGothic" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label stylesheets="@../themes/chaos.css" text="Session Elapsed: " textFill="#e8e3f0" GridPane.rowIndex="4">
+                                             <font>
+                                                <Font name="Consolas Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="timeElapsedLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER" stylesheets="@../themes/chaos.css" text="null" textFill="#ffd35a" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                             <font>
+                                                <Font name="FutehodoMaruGothic" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label stylesheets="@../themes/chaos.css" text="Minutes Elapsed:" textFill="#e8e3f0" GridPane.rowIndex="5">
+                                             <font>
+                                                <Font name="Consolas Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="minuteLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER" stylesheets="@../themes/chaos.css" text="null" textFill="#996ae4" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                             <font>
+                                                <Font name="FutehodoMaruGothic" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" right="10.0" />
+                                       </padding>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </GridPane>
+                                    <Separator prefWidth="200.0" stylesheets="@../themes/chaos.css" />
+                                    <Label maxWidth="1.7976931348623157E308" prefWidth="221.0" style="-fx-font-family: &quot;Consolas&quot;; -fx-background-color: #0F0D17;" stylesheets="@../themes/chaos.css" text="Overall Statistics" textFill="#e8e3f0">
+                                       <padding>
+                                          <Insets bottom="2.5" left="10.0" right="10.0" top="2.5" />
+                                       </padding>
+                                    </Label>
+                                    <Separator prefWidth="200.0" stylesheets="@../themes/chaos.css" />
+                                    <GridPane alignment="CENTER" prefHeight="213.0" prefWidth="225.0" style="-fx-background-color: #1A1726;" stylesheets="@../themes/chaos.css" vgap="2.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="128.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="10.0" prefWidth="73.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints />
+                                          <RowConstraints maxHeight="8.0" minHeight="0.0" prefHeight="0.0" />
+                                          <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="15.0" />
+                                          <RowConstraints maxHeight="20.0" minHeight="20.0" />
+                                          <RowConstraints maxHeight="20.0" />
+                                          <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label stylesheets="@../themes/chaos.css" text="Tainote Count:" textFill="#e8e3f0" GridPane.rowIndex="5">
+                                             <font>
+                                                <Font name="Consolas Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="uniqueWordCountLabel1" alignment="CENTER_RIGHT" contentDisplay="CENTER" stylesheets="@../themes/chaos.css" text="null" textFill="#ffd35a" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                             <font>
+                                                <Font name="FutehodoMaruGothic" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label stylesheets="@../themes/chaos.css" text="Average WPM:" textFill="#e8e3f0" GridPane.rowIndex="6">
+                                             <font>
+                                                <Font name="Consolas Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="wpmLabel1" alignment="CENTER_RIGHT" contentDisplay="CENTER" stylesheets="@../themes/chaos.css" text="null" textFill="#996ae4" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                             <font>
+                                                <Font name="FutehodoMaruGothic" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label stylesheets="@../themes/chaos.css" text="Total Time Elapsed:" textFill="#e8e3f0" GridPane.rowIndex="7">
+                                             <font>
+                                                <Font name="Consolas Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="timeStartedLabel1" alignment="CENTER_RIGHT" contentDisplay="CENTER" stylesheets="@../themes/chaos.css" text="null" textFill="#ffd35a" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                             <font>
+                                                <Font name="FutehodoMaruGothic" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label stylesheets="@../themes/chaos.css" text="Session Count:" textFill="#e8e3f0" GridPane.rowIndex="8">
+                                             <font>
+                                                <Font name="Consolas Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="timeElapsedLabel1" alignment="CENTER_RIGHT" contentDisplay="CENTER" stylesheets="@../themes/chaos.css" text="null" textFill="#996ae4" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                             <font>
+                                                <Font name="FutehodoMaruGothic" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label stylesheets="@../themes/chaos.css" text="Accum. Words:" textFill="#e8e3f0" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font name="Consolas Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="wordCountLabel1" alignment="CENTER_RIGHT" contentDisplay="CENTER" stylesheets="@../themes/chaos.css" text="null" textFill="#ffd35a" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font name="FutehodoMaruGothic" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label stylesheets="@../themes/chaos.css" text="Tag Count:" textFill="#e8e3f0" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font name="Consolas Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="charCountLabel1" alignment="CENTER_RIGHT" contentDisplay="CENTER" stylesheets="@../themes/chaos.css" text="null" textFill="#996ae4" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font name="FutehodoMaruGothic" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label stylesheets="@../themes/chaos.css" text="Longest Session:" textFill="#e8e3f0" GridPane.rowIndex="9">
+                                             <font>
+                                                <Font name="Consolas Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="minuteLabel1" alignment="CENTER_RIGHT" contentDisplay="CENTER" stylesheets="@../themes/chaos.css" text="null" textFill="#ffd35a" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                             <font>
+                                                <Font name="FutehodoMaruGothic" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" />
+                                       </padding>
+                                    </GridPane>
                                  </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
                               </VBox>
-                              <VBox maxHeight="1.7976931348623157E308" maxWidth="400.0" minWidth="-Infinity" prefHeight="726.0" prefWidth="221.0">
-                                 <children>
-                                    <TextField fx:id="searchField" promptText="Search..." style="-fx-margin: 20;" />
-                                    <SplitPane orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" VBox.vgrow="ALWAYS">
-                                       <items>
-                                          <VBox prefHeight="699.0" prefWidth="203.0">
+                           </children>
+                        </VBox>
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="400.0" minWidth="-Infinity" prefHeight="726.0" prefWidth="221.0" stylesheets="@../themes/chaos.css">
+                           <children>
+                              <TextField fx:id="searchField" promptText="Search..." style="-fx-margin: 20;" stylesheets="@../themes/chaos.css" />
+                              <SplitPane orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" stylesheets="@../themes/chaos.css" VBox.vgrow="ALWAYS">
+                                 <items>
+                                    <VBox prefHeight="699.0" prefWidth="203.0" stylesheets="@../themes/chaos.css">
+                                       <children>
+                                          <HBox maxHeight="-Infinity" prefHeight="26.0" prefWidth="219.0" stylesheets="@../themes/chaos.css">
                                              <children>
-                                                <HBox maxHeight="-Infinity" prefHeight="26.0" prefWidth="219.0">
-                                                   <children>
-                                                      <Label maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="219.0" style="-fx-font-family: &quot;Consolas&quot;;" text="Tainotes List">
-                                                         <padding>
-                                                            <Insets bottom="2.5" left="10.0" right="10.0" top="2.5" />
-                                                         </padding>
-                                                      </Label>
-                                                      <ComboBox fx:id="filterComboBox" prefWidth="150.0" promptText="Filter" visibleRowCount="5">
-                                                         <HBox.margin>
-                                                            <Insets right="5.0" />
-                                                         </HBox.margin>
-                                                      </ComboBox>
-                                                   </children>
-                                                </HBox>
-                                                <ListView fx:id="listView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="184.0" VBox.vgrow="ALWAYS" />
+                                                <Label maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="219.0" style="-fx-font-family: &quot;Consolas&quot;;" text="Tainotes List">
+                                                   <padding>
+                                                      <Insets bottom="2.5" left="10.0" right="10.0" top="2.5" />
+                                                   </padding>
+                                                </Label>
+                                                <ComboBox fx:id="filterComboBox" prefWidth="150.0" promptText="Filter" visibleRowCount="5">
+                                                   <HBox.margin>
+                                                      <Insets right="5.0" />
+                                                   </HBox.margin>
+                                                </ComboBox>
                                              </children>
-                                          </VBox>
-                                       </items>
-                                    </SplitPane>
-                                 </children>
-                              </VBox>
-                           </items>
-                        </SplitPane>
-                    </items>
+                                          </HBox>
+                                          <ListView fx:id="listView" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="451.0" prefWidth="221.0" style="-fx-control-inner-background: #0F0D17;" stylesheets="@../themes/chaos.css" VBox.vgrow="ALWAYS" />
+                                       </children>
+                                    </VBox>
+                                 </items>
+                              </SplitPane>
+                           </children>
+                        </VBox>
+                     </items>
                   </SplitPane>
-               </children>
-            </VBox>
-            <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" style="-fx-background-color: #191a1f;">
-               <children>
-                  <Label text="© 2026 Dekxi. All rights reserved." textFill="WHITE">
-                     <padding>
-                        <Insets left="10.0" right="10.0" />
-                     </padding>
-                  </Label>
-                  <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="10.0" prefWidth="70.0" />
-                  <Label text="|" textFill="WHITE" />
-                  <Label text="UTF-8" textFill="WHITE">
-                     <padding>
-                        <Insets left="10.0" right="10.0" />
-                     </padding>
-                  </Label>
-               </children>
-            </HBox>
+               </items>
+            </SplitPane>
          </children>
       </VBox>
+      <HBox fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" style="-fx-background-color: #191a1f;" stylesheets="@../themes/chaos.css">
+         <children>
+            <Label stylesheets="@../themes/chaos.css" text="© 2026 Dekxi. All rights reserved." textFill="WHITE">
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </Label>
+            <Pane prefHeight="200.0" prefWidth="200.0" stylesheets="@../themes/chaos.css" HBox.hgrow="ALWAYS" />
+            <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="10.0" prefWidth="70.0" stylesheets="@../themes/chaos.css" />
+            <Label stylesheets="@../themes/chaos.css" text="|" textFill="WHITE" />
+            <Label stylesheets="@../themes/chaos.css" text="UTF-8" textFill="WHITE">
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </Label>
+         </children>
+      </HBox>
    </children>
-</StackPane>
+   <padding>
+      <Insets bottom="2.0" left="2.0" right="5.0" top="2.0" />
+   </padding>
+</VBox>

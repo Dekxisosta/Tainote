@@ -17,6 +17,7 @@ public class CounterHandler {
     private Label timeElapsedLabel;
     private Label zoomLabel;
     private Label wpmLabel;
+    private Label minuteLabel;
 
     public CounterHandler(
         TextArea textArea,
@@ -26,7 +27,8 @@ public class CounterHandler {
         Label timeStartedLabel,
         Label timeElapsedLabel,
         Label zoomLabel,
-        Label wpmLabel
+        Label wpmLabel,
+        Label minuteLabel
     ){
         this.textArea = textArea;
         this.charCountLabel = charCountLabel;
@@ -36,6 +38,7 @@ public class CounterHandler {
         this.timeElapsedLabel = timeElapsedLabel;
         this.zoomLabel = zoomLabel;
         this.wpmLabel = wpmLabel;
+        this.minuteLabel = minuteLabel;
 
         setUpElapsedTimer();
         setUpStartTime();
@@ -68,6 +71,7 @@ public class CounterHandler {
             long mins = (secondsElapsed[0] % 3600) / 60;
             long secs = secondsElapsed[0] % 60;
             timeElapsedLabel.setText(String.format("%02d:%02d:%02d", hrs, mins, secs));
+            minuteLabel.setText(String.format("%2d %s", mins, (mins>1)? "mins": "min"));
         }));
         timer.setCycleCount(Animation.INDEFINITE);
         timer.play();

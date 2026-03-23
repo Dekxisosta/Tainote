@@ -96,15 +96,15 @@ public class ListHandler {
 
             private void applyStyle(Label title, Label author, Label modified, boolean selected) {
                 if (selected) {
-                    setStyle("-fx-border-color: black; -fx-border-width: 1.5; -fx-background-color: transparent;");
-                    title.setStyle("-fx-font-weight: bold; -fx-font-size: 13px; -fx-text-fill: #7B00FF;");
-                    author.setStyle("-fx-font-size: 11px; -fx-text-fill: #B06EFF;");
-                    modified.setStyle("-fx-font-size: 11px; -fx-text-fill: #B06EFF;");
+                    setStyle("-fx-border-color: #7C5CBF; -fx-border-width: 1.5; -fx-background-color: #4A3880;");
+                    title.setStyle("-fx-font-weight: bold; -fx-font-size: 13px; -fx-text-fill: #E8E3F0;");
+                    author.setStyle("-fx-font-size: 11px; -fx-text-fill: #9B7FD4;");
+                    modified.setStyle("-fx-font-size: 11px; -fx-text-fill: #9B7FD4;");
                 } else {
                     setStyle("-fx-border-color: transparent; -fx-background-color: transparent;");
-                    title.setStyle("-fx-font-weight: bold; -fx-font-size: 13px; -fx-text-fill: black;");
-                    author.setStyle("-fx-font-size: 11px; -fx-text-fill: #888888;");
-                    modified.setStyle("-fx-font-size: 11px; -fx-text-fill: gray;");
+                    title.setStyle("-fx-font-weight: bold; -fx-font-size: 13px; -fx-text-fill: #E8E3F0;");
+                    author.setStyle("-fx-font-size: 11px; -fx-text-fill: #9E99B0;");
+                    modified.setStyle("-fx-font-size: 11px; -fx-text-fill: #5C5870;");
                 }
             }
         });

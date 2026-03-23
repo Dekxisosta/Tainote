@@ -100,6 +100,9 @@ public class StyleHandler {
         return toCss(map);
     }
     private String toCss(Map<String, String> style) {
+        System.out.println(style.entrySet().stream()
+                .map(e -> e.getKey() + ": " + e.getValue() + ";")
+                .collect(Collectors.joining(" ")));
         return style.entrySet().stream()
                 .map(e -> e.getKey() + ": " + e.getValue() + ";")
                 .collect(Collectors.joining(" "));

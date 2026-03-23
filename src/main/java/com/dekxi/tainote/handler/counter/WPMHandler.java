@@ -26,6 +26,8 @@ public class WPMHandler {
     }
 
     private void setUpWpmLabel(){
+        wpmLabel.setText(String.valueOf(0));
+
         textArea.textProperty().addListener((_, _, newVal) -> {
             if(appState.isLoadingNote()) return;
             long now = System.currentTimeMillis();
@@ -33,6 +35,7 @@ public class WPMHandler {
                 long gap = now - lastKeystrokeTime;
                 if (gap < IDLE_THRESHOLD) activeMillis += gap;
             }
+            appState.setHasTyped(true);
             lastKeystrokeTime = now;
             totalChars++;
             double activeMinutes = activeMillis / 60000.0;
