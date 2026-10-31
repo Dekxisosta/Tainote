@@ -8,7 +8,7 @@ A comprehensive note-taking application with data visualization
 ![SceneBuilder](https://img.shields.io/badge/SceneBuilder-3a86ff?style=flat-square&logo=java&logoColor=white)
 ![Maven](https://img.shields.io/badge/Maven-C71A36?style=flat-square&logo=apachemaven&logoColor=white)
 ![JavaFX Canvas](https://img.shields.io/badge/JavaFX_Canvas-e76f00?style=flat-square&logo=java&logoColor=white)
-![Tainote Screenshot](./assets/images/Screenshot_v1.png)
+![Tainote Screenshot](./docs/Screenshot_v1.png)
 
 ---
 
